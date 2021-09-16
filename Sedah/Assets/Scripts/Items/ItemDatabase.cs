@@ -22,6 +22,6 @@ public class ItemDatabase : ScriptableObject, ISerializationCallbackReceiver
 
     public void OnBeforeSerialize()
     {
-        //GetItem = new Dictionary<int, ItemObject>();
+        GetItem = new Dictionary<int, Item>();
     }
 }

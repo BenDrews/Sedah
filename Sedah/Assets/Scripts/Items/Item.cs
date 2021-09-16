@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public enum ItemType
 {
     Potion
 }
+[CreateAssetMenu(fileName = "New Item", menuName = "ScriptableObjects/Item")]
 public class Item : ScriptableObject
 {
     [SerializeField] private int id;

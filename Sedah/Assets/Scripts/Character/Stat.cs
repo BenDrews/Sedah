@@ -4,10 +4,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Collections.ObjectModel;
 
+public enum StatType
+{
+    Health,
+    Mana,
+    AttackDamage,
+    AbilityPower,
+    AttackSpeed,
+    MoveSpeed,
+    CDR,
+    Armor,
+    MagicRes,
+    ArmPen,
+    MagicPen
+}
+
 [Serializable]
 public class Stat
 {
     public float BaseValue;
+    public float ValuePerLevel;
     protected float lastBaseValue = float.MinValue;
     //isDirty is to prevent recalculating finalStatValue constantly.
     protected bool isDirty = true;
@@ -15,6 +31,7 @@ public class Stat
 
     protected readonly List<StatModifier> statModifiers;
     public readonly ReadOnlyCollection<StatModifier> StatModifiers;
+    [SerializeField] private StatType SType;
 
     //constructor without a base value.
     public Stat()
@@ -24,9 +41,18 @@ public class Stat
     }
 
     //constructor with a base value.
-    public Stat(float baseValue) : this()
+    public Stat(float baseValue, float valuePerLevel, StatType statType) : this()
     {
         BaseValue = baseValue;
+        ValuePerLevel = valuePerLevel;
+        SType = statType;
+
+    }
+
+    //modify value when level up.Re
+    public void LevelUp(int level)
+    {
+        BaseValue += level * ValuePerLevel;
     }
 
     // Change Value
