@@ -32,6 +32,8 @@ public class Inventory : ScriptableObject, ISerializationCallbackReceiver
         get { return sprite; }
         private set { sprite = value; }
     }
+
+    // save/load work-in-progress.
     [ContextMenu("Save")]
     public void Save()
     {

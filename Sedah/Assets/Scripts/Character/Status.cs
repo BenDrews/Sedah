@@ -15,6 +15,7 @@ public class Status : ScriptableObject
 {
     [SerializeField] private string id;
     [SerializeField] private StatusType statusType;
+    [SerializeField] private float _value;
     public string ID
     {
         get { return id; }
@@ -25,5 +26,11 @@ public class Status : ScriptableObject
     {
         get { return statusType; }
         private set { statusType = value; }
+    }
+
+    public float Value
+    {
+        get { return _value; }
+        private set { _value = value; }
     }
 }
