@@ -13,6 +13,9 @@ namespace Sedah
     {
         public Transform playerSpawn;
 
+        [SerializeField]
+        private GameObject localPlayerCameraTargetPrefab;
+
         public override void OnServerAddPlayer(NetworkConnection conn)
         {
             // add player at correct spawn position
@@ -25,6 +28,14 @@ namespace Sedah
         {
             // call base functionality (actually destroys the player)
             base.OnServerDisconnect(conn);
+        }
+
+        public override void OnStartClient()
+        {
+            // Disable to main camera and enable the local player camera
+            GameObject.FindGameObjectWithTag("MainCamera").SetActive(false);
+            GameObject playerCamTarget = GameObject.Instantiate(localPlayerCameraTargetPrefab);
+            base.OnStartClient();
         }
     }
 }

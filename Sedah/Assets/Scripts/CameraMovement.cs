@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Mirror;
 
 public class CameraMovement : MonoBehaviour
 {
     public bool lockedMode = true;
-    public Vector3 forward, right;
-    public float cameraSpeed = 5f;
+    private Vector3 forward, right;
+    public float cameraSpeed = 0.5f;
+    public float cameraDistance = 15f;
     Vector3 buttonDownMousePosition;
 
     void Start()
@@ -23,6 +25,14 @@ public class CameraMovement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Y))
         {
             lockedMode = !lockedMode;
+        }
+
+        if (lockedMode)
+        {
+            Vector3 playerPos = NetworkClient.localPlayer.transform.position;
+            playerPos.x -= cameraDistance;
+            playerPos.z -= cameraDistance;
+            transform.position = playerPos;
         }
 
         if (!lockedMode)
