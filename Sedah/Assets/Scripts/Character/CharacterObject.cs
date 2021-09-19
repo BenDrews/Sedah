@@ -59,6 +59,11 @@ public class CharacterObject : NetworkBehaviour
         return StatusEffects[sType];
     }
 
+    public bool HasStat(StatType sType)
+    {
+        return CharacterStats.ContainsKey(sType);
+    }
+
     public void AddStatus(Status status)
     {
         StatusEffects.Add(status.StatusType, status);

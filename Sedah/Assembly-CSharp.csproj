@@ -70,6 +70,7 @@
     <Compile Include="Assets\Scripts\Character\Status.cs" />
     <Compile Include="Assets\Scripts\PlayerMovement.cs" />
     <Compile Include="Assets\Scripts\Dungeons\Dungeon.cs" />
+    <Compile Include="Assets\Scripts\Character\Health.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Mirror\Plugins\Mono.Cecil\Mono.CecilX.dll" />

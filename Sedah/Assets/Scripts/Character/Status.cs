@@ -5,8 +5,9 @@ using UnityEngine;
 
 public enum StatusType
 {
-    Poisoned,
-    Burning
+    Burning,
+    HealingReduced,
+    Poisoned
 }
 
 [CreateAssetMenu(fileName = "Status", menuName = "ScriptableObjects/Status")]

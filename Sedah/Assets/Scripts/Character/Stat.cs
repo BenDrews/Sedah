@@ -16,7 +16,8 @@ public enum StatType
     Armor,
     MagicRes,
     ArmPen,
-    MagicPen
+    MagicPen,
+    HealPower
 }
 
 [Serializable]
