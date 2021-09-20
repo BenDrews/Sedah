@@ -71,6 +71,9 @@
     <Compile Include="Assets\Scripts\PlayerMovement.cs" />
     <Compile Include="Assets\Scripts\Dungeons\Dungeon.cs" />
     <Compile Include="Assets\Scripts\Character\Health.cs" />
+    <Compile Include="Assets\Scripts\Character\DamageInfo.cs" />
+    <Compile Include="Assets\Scripts\Character\DamageType.cs" />
+    <Compile Include="Assets\Scripts\Character\DamageReport.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Mirror\Plugins\Mono.Cecil\Mono.CecilX.dll" />

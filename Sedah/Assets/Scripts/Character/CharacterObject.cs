@@ -54,14 +54,29 @@ public class CharacterObject : NetworkBehaviour
         return CharacterStats[sType];
     }
 
-    public Status GetStatus(StatusType sType)
+    public Status GetStatus(StatusType stType)
     {
-        return StatusEffects[sType];
+        return StatusEffects[stType];
     }
 
     public bool HasStat(StatType sType)
     {
         return CharacterStats.ContainsKey(sType);
+    }
+
+    public bool HasStatus(StatusType stType)
+    {
+        return StatusEffects.ContainsKey(stType);
+    }
+
+    public float GetStatValue(StatType sType)
+    {
+        return HasStat(sType) ? CharacterStats[sType].Value : 0f;
+    }
+
+    public float GetStatusValue(StatusType stType)
+    {
+        return HasStatus(stType) ? StatusEffects[stType].Value : 0f;
     }
 
     public void AddStatus(Status status)
