@@ -18,6 +18,11 @@ public class StatModifier
     public readonly int Order;
     public readonly object Source; // Added this variable
 
+    public StatModifier()
+    {
+
+    }
+
     // "Main" constructor. Requires all variables.
     public StatModifier(float value, StatModType type, int order, object source) // Added "source" input parameter
     {

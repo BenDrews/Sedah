@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using Mirror;
 
@@ -8,19 +7,19 @@ public class CharacterObject : NetworkBehaviour
 {
     [SerializeField] private AbilityDatabase AbilityDatabase;
     [SerializeField] private Character character;
-    
+
     //Stats for the PlayerCharacter
-    private Dictionary<StatType, Stat> CharacterStats;
+    private readonly SyncDictionary<StatType, Stat> CharacterStats = new SyncDictionary<StatType, Stat>();
 
     //Status Effects for the PlayerCharacter
-    private Dictionary<StatusType, List<Status>> StatusEffects;
-    private List<Ability> Abilities;
+    private readonly SyncDictionary<StatusType, Status> StatusEffects = new SyncDictionary<StatusType, Status>();
+    private readonly SyncList<Ability> Abilities = new SyncList<Ability>();
     private int Gold = 0;
     private int Level = 1;
-
-    void Awake()
-    {        
-        CharacterStats = new Dictionary<StatType, Stat>();
+    
+    void Start()
+    {
+        
         CharacterStats.Add(StatType.Health, new Stat(character.Health, character.HealthPerLvl, StatType.Health));
         CharacterStats.Add(StatType.Mana, new Stat(character.Mana, character.ManaPerLvl, StatType.Mana));
         CharacterStats.Add(StatType.AttackDamage, new Stat(character.AttackDamage, character.ADPerLvl, StatType.AttackDamage));
@@ -34,14 +33,11 @@ public class CharacterObject : NetworkBehaviour
         CharacterStats.Add(StatType.MagicPen, new Stat(0, 0, StatType.MagicPen));
         CharacterStats.Add(StatType.AttackRange, new Stat(character.AttackRange, 0, StatType.AttackRange));
 
-        Abilities = new List<Ability>();
         List<int> abilities = character.GetAbilities();
         foreach (int a in abilities)
         {
             Abilities.Add(AbilityDatabase.GetAbility(a));
-        }
-
-        StatusEffects = new Dictionary<StatusType, List<Status>>();
+        }   
     }
 
     // Update is called once per frame
@@ -49,6 +45,12 @@ public class CharacterObject : NetworkBehaviour
     {
 
     }
+
+    public CharacterObject()
+    {
+
+    }
+    
 
     public CharacterObject(Character character)
     {
@@ -60,7 +62,7 @@ public class CharacterObject : NetworkBehaviour
         return CharacterStats[sType];
     }
 
-    public List<Status> GetStatus(StatusType stType)
+    public Status GetStatus(StatusType stType)
     {
         return StatusEffects[stType];
     }
@@ -82,21 +84,17 @@ public class CharacterObject : NetworkBehaviour
 
     public float GetTotalStatusValue(StatusType stType)
     {
-        return HasStatus(stType) ? StatusEffects[stType].Select(x => x.Value).Sum() : 0f;
+        return 0f;
     }
 
     public float GetMaxStatusValue(StatusType stType)
     {
-        return HasStatus(stType) ? StatusEffects[stType].Select(x => x.Value).Max() : 0f;
+            return 0f;
     }
 
     public void AddStatus(Status status)
     {
-        if (!StatusEffects.ContainsKey(status.StatusType))
-        {
-            StatusEffects.Add(status.StatusType, new List<Status>());
-        }
-        StatusEffects[status.StatusType].Add(status);
+        StatusEffects.Add(status.StatusType, status);
     }
 
     public Ability GetAbility(int i)
@@ -118,6 +116,7 @@ public class CharacterObject : NetworkBehaviour
     {
         CharacterStats[sType].RemoveModifier(statModifier);
     }
+    
 
     public void AddGold(int g)
     {

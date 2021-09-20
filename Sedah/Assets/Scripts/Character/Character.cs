@@ -100,7 +100,7 @@ public class Character : ScriptableObject
 
     public float AttackRange
     {
-        get { return AttackRange; }
+        get { return attackRange; }
         private set { AttackRange = value; }
     }
 

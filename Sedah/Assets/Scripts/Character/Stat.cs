@@ -28,20 +28,18 @@ public class Stat
 {
     public float BaseValue;
     public float ValuePerLevel;
-    protected float lastBaseValue = float.MinValue;
+    public float lastBaseValue = float.MinValue;
     //isDirty is to prevent recalculating finalStatValue constantly.
-    protected bool isDirty = true;
-    protected float _value;
+    public bool isDirty = true;
+    public float _value;
 
-    protected readonly List<StatModifier> statModifiers;
-    public readonly ReadOnlyCollection<StatModifier> StatModifiers;
+    public readonly List<StatModifier> statModifiers = new List<StatModifier>();
+    public readonly List<StatModifier> StatModifiers;
     [SerializeField] private StatType SType;
 
     //constructor without a base value.
     public Stat()
     {
-        statModifiers = new List<StatModifier>();
-        StatModifiers = statModifiers.AsReadOnly();
     }
 
     //constructor with a base value.

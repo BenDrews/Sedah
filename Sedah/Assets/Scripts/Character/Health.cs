@@ -12,6 +12,7 @@ public class Health : NetworkBehaviour
     public float currentHealth;
     private CharacterObject character;
     public double lastHitTime;
+
     public bool alive
     {
         get
@@ -74,7 +75,11 @@ public class Health : NetworkBehaviour
         this.currentHealth = Mathf.Min(this.maxHealth, this.currentHealth += num);
         if (nonRegen)
         {
-            Health.onCharacterHealServer(this, num);
+            Action<Health, float> healAction = Health.onCharacterHealServer;
+            if (healAction != null)
+            {
+                healAction(this, num);
+            }
         }
         return num;
     }
@@ -127,18 +132,26 @@ public class Health : NetworkBehaviour
         DamageReport damageReport = new DamageReport(damageInfo, num);
         this.currentHealth = Math.Max(this.currentHealth - num, 0f);
         this.lastHitTime = NetworkTime.time;
-        Health.onCharacterDamageServer(this, damageReport);
+        Action<Health, DamageReport> action = Health.onCharacterDamageServer;
+        if (action != null)
+        {
+            action(this, damageReport);
+        }
 
         if (this.currentHealth == 0f)
         {
-            Health.onCharacterDeathServer(this, damageReport);
+            Action<Health, DamageReport> deathAction = Health.onCharacterDeathServer;
+            if (deathAction != null)
+            {
+                deathAction(this, damageReport);
+            }
         }
         Debug.Log("DAMAGE TAKEN: " + num);
         return num;
     }
 
     // Start is called before the first frame update
-    void Awake()
+    void Start()
     {
         this.character = base.GetComponent<CharacterObject>();
         this.currentHealth = this.maxHealth;

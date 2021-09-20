@@ -19,7 +19,7 @@ public class PlayerAutoAttack : NetworkBehaviour
         timeLastAttacked = NetworkTime.time;
     }
 
-    private void Awake()
+    private void Start()
     {
         if (NetworkClient.localPlayer.netId == base.netId)
         {
@@ -29,11 +29,6 @@ public class PlayerAutoAttack : NetworkBehaviour
             Destroy(this);
         }
 
-    }
-    // Start is called before the first frame update
-    void Start()
-    {
-        
     }
 
     // Update is called once per frame

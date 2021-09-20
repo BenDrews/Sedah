@@ -10,7 +10,6 @@ namespace Sedah
     {
         NavMeshAgent agent;
         public float movementSpeed = 30;
-
         private void Start()
         {            
             agent = GetComponent<NavMeshAgent>();

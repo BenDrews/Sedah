@@ -15,11 +15,11 @@ GameObject:
   - component: {fileID: 1960080401273295252}
   - component: {fileID: 1960080401273295259}
   - component: {fileID: 1960080401273295258}
-  - component: {fileID: 3342690992418605233}
   - component: {fileID: -8584090551771141314}
-  - component: {fileID: 4485660748613106888}
-  - component: {fileID: 4243322286320749347}
-  - component: {fileID: 7545907781735843372}
+  - component: {fileID: 3249766891276374584}
+  - component: {fileID: 7663989852764281415}
+  - component: {fileID: 2524789960037904295}
+  - component: {fileID: 5612151026507344901}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -166,21 +166,6 @@ MonoBehaviour:
   showGizmos: 0
   showOverlay: 0
   overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
---- !u!114 &3342690992418605233
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1960080401273295257}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b1efb632f170ac7429bb98d43371b1f9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  movementSpeed: 300
 --- !u!195 &-8584090551771141314
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -203,7 +188,22 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &4485660748613106888
+--- !u!114 &3249766891276374584
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1960080401273295257}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1efb632f170ac7429bb98d43371b1f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  movementSpeed: 30
+--- !u!114 &7663989852764281415
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -216,10 +216,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   syncMode: 0
-  syncInterval: 0
+  syncInterval: 0.1
   AbilityDatabase: {fileID: 11400000, guid: bd90ddd6416ca354792eaea05b0ceb41, type: 2}
   character: {fileID: 11400000, guid: e5758064760e01e4c9e62ea12b103192, type: 2}
---- !u!114 &4243322286320749347
+--- !u!114 &2524789960037904295
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -235,7 +235,7 @@ MonoBehaviour:
   syncInterval: 0.1
   currentHealth: 0
   lastHitTime: 0
---- !u!114 &7545907781735843372
+--- !u!114 &5612151026507344901
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
