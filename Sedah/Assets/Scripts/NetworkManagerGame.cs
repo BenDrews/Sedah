@@ -19,8 +19,12 @@ namespace Sedah
         public override void OnServerAddPlayer(NetworkConnection conn)
         {
             // add player at correct spawn position
-
             GameObject player = Instantiate(playerPrefab, playerSpawn.position, playerSpawn.rotation);
+
+            // Disable to main camera and enable the local player camera
+            GameObject.FindGameObjectWithTag("MainCamera").SetActive(false);
+            GameObject playerCamTarget = GameObject.Instantiate(localPlayerCameraTargetPrefab);
+
             NetworkServer.AddPlayerForConnection(conn, player);
         }
 
@@ -28,14 +32,6 @@ namespace Sedah
         {
             // call base functionality (actually destroys the player)
             base.OnServerDisconnect(conn);
-        }
-
-        public override void OnStartClient()
-        {
-            // Disable to main camera and enable the local player camera
-            GameObject.FindGameObjectWithTag("MainCamera").SetActive(false);
-            GameObject playerCamTarget = GameObject.Instantiate(localPlayerCameraTargetPrefab);
-            base.OnStartClient();
         }
     }
 }

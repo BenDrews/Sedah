@@ -22,10 +22,15 @@ namespace Sedah
             if (Input.GetMouseButtonDown(1))
             {
                 RaycastHit hit;
+                LayerMask layerMask = LayerMask.GetMask("Terrain", "TargetableCharacters");
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+                if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
                 {
-                    agent.SetDestination(hit.point);
+                    // TODO: Find a better way to represent the terrain layer
+                    if (hit.transform.gameObject.layer == 7)
+                    {
+                        agent.SetDestination(hit.point);
+                    }
                 }
             }
         }

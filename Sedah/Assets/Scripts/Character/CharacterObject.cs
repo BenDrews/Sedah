@@ -7,29 +7,20 @@ using Mirror;
 public class CharacterObject : NetworkBehaviour
 {
     [SerializeField] private AbilityDatabase AbilityDatabase;
+    [SerializeField] private Character character;
     
     //Stats for the PlayerCharacter
-    private Dictionary<StatType, Stat> CharacterStats = new Dictionary<StatType, Stat>();
+    private Dictionary<StatType, Stat> CharacterStats;
 
     //Status Effects for the PlayerCharacter
-    private Dictionary<StatusType, List<Status>> StatusEffects = new Dictionary<StatusType, List<Status>>();
-    private List<Ability> Abilities = new List<Ability>();
+    private Dictionary<StatusType, List<Status>> StatusEffects;
+    private List<Ability> Abilities;
     private int Gold = 0;
     private int Level = 1;
-    // Start is called before the first frame update
-    void Start()
-    {
 
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
-    public CharacterObject(Character character)
-    {
+    void Awake()
+    {        
+        CharacterStats = new Dictionary<StatType, Stat>();
         CharacterStats.Add(StatType.Health, new Stat(character.Health, character.HealthPerLvl, StatType.Health));
         CharacterStats.Add(StatType.Mana, new Stat(character.Mana, character.ManaPerLvl, StatType.Mana));
         CharacterStats.Add(StatType.AttackDamage, new Stat(character.AttackDamage, character.ADPerLvl, StatType.AttackDamage));
@@ -41,13 +32,27 @@ public class CharacterObject : NetworkBehaviour
         CharacterStats.Add(StatType.MagicRes, new Stat(character.MagicRes, character.MRPerLvl, StatType.MagicRes));
         CharacterStats.Add(StatType.ArmPen, new Stat(0, 0, StatType.ArmPen));
         CharacterStats.Add(StatType.MagicPen, new Stat(0, 0, StatType.MagicPen));
+        CharacterStats.Add(StatType.AttackRange, new Stat(character.AttackRange, 0, StatType.AttackRange));
 
+        Abilities = new List<Ability>();
         List<int> abilities = character.GetAbilities();
         foreach (int a in abilities)
         {
             Abilities.Add(AbilityDatabase.GetAbility(a));
         }
 
+        StatusEffects = new Dictionary<StatusType, List<Status>>();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
+
+    public CharacterObject(Character character)
+    {
+        this.character = character;
     }
 
     public Stat GetStat(StatType sType)

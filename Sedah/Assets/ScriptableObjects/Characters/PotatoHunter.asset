@@ -13,4 +13,20 @@ MonoBehaviour:
   m_Name: PotatoHunter
   m_EditorClassIdentifier: 
   id: 0
+  name: 
   sprite: {fileID: 0}
+  health: 100
+  healthPerLvl: 10
+  mana: 0
+  manaPerLvl: 0
+  attackDamage: 50
+  adPerLvl: 1
+  attackSpeed: 0
+  asPerLvl: 0
+  attackRange: 10
+  moveSpeed: 0
+  armor: 0
+  armorPerLvl: 0
+  magicRes: 0
+  mrPerLvl: 0
+  abilities: 

@@ -10,7 +10,7 @@ public class Health : NetworkBehaviour
 {
     [SyncVar]
     public float currentHealth;
-    public CharacterObject character;
+    private CharacterObject character;
     public double lastHitTime;
     public bool alive
     {
@@ -133,14 +133,15 @@ public class Health : NetworkBehaviour
         {
             Health.onCharacterDeathServer(this, damageReport);
         }
+        Debug.Log("DAMAGE TAKEN: " + num);
         return num;
     }
 
     // Start is called before the first frame update
     void Awake()
     {
-        currentHealth = maxHealth;
         this.character = base.GetComponent<CharacterObject>();
+        this.currentHealth = this.maxHealth;
         this.lastHitTime = float.NegativeInfinity;
     }
 

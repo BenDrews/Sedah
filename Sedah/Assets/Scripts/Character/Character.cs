@@ -17,6 +17,7 @@ public class Character : ScriptableObject
     [SerializeField] private float adPerLvl = 0;
     [SerializeField] private float attackSpeed = 0;
     [SerializeField] private float asPerLvl = 0;
+    [SerializeField] private float attackRange = 0;
     [SerializeField] private float moveSpeed = 0;
     [SerializeField] private float armor = 0;
     [SerializeField] private float armorPerLvl = 0;
@@ -95,6 +96,12 @@ public class Character : ScriptableObject
     {
         get { return asPerLvl; }
         private set { asPerLvl = value; }
+    }
+
+    public float AttackRange
+    {
+        get { return AttackRange; }
+        private set { AttackRange = value; }
     }
 
     public float MoveSpeed
