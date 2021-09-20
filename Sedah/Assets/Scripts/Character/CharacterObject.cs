@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Mirror;
 
@@ -11,7 +12,7 @@ public class CharacterObject : NetworkBehaviour
     private Dictionary<StatType, Stat> CharacterStats = new Dictionary<StatType, Stat>();
 
     //Status Effects for the PlayerCharacter
-    private Dictionary<StatusType, Status> StatusEffects = new Dictionary<StatusType, Status>();
+    private Dictionary<StatusType, List<Status>> StatusEffects = new Dictionary<StatusType, List<Status>>();
     private List<Ability> Abilities = new List<Ability>();
     private int Gold = 0;
     private int Level = 1;
@@ -54,7 +55,7 @@ public class CharacterObject : NetworkBehaviour
         return CharacterStats[sType];
     }
 
-    public Status GetStatus(StatusType stType)
+    public List<Status> GetStatus(StatusType stType)
     {
         return StatusEffects[stType];
     }
@@ -74,14 +75,23 @@ public class CharacterObject : NetworkBehaviour
         return HasStat(sType) ? CharacterStats[sType].Value : 0f;
     }
 
-    public float GetStatusValue(StatusType stType)
+    public float GetTotalStatusValue(StatusType stType)
     {
-        return HasStatus(stType) ? StatusEffects[stType].Value : 0f;
+        return HasStatus(stType) ? StatusEffects[stType].Select(x => x.Value).Sum() : 0f;
+    }
+
+    public float GetMaxStatusValue(StatusType stType)
+    {
+        return HasStatus(stType) ? StatusEffects[stType].Select(x => x.Value).Max() : 0f;
     }
 
     public void AddStatus(Status status)
     {
-        StatusEffects.Add(status.StatusType, status);
+        if (!StatusEffects.ContainsKey(status.StatusType))
+        {
+            StatusEffects.Add(status.StatusType, new List<Status>());
+        }
+        StatusEffects[status.StatusType].Add(status);
     }
 
     public Ability GetAbility(int i)

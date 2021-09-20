@@ -11,4 +11,5 @@ public class DamageInfo
     public bool isCrit;
     public bool isDoT;
     public bool isSpell;
+    public bool isFraction;
 }

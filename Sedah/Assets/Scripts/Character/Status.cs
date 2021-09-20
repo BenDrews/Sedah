@@ -7,6 +7,7 @@ public enum StatusType
 {
     Burning,
     HealingReduced,
+    HealingOverTime,
     Poisoned
 }
 

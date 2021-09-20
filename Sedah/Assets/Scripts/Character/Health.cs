@@ -8,15 +8,17 @@ using Mirror;
 [RequireComponent(typeof(CharacterObject))]
 public class Health : NetworkBehaviour
 {
+    [SyncVar]
     public float currentHealth;
     public CharacterObject character;
-    public float lastHitTime;
+    public double lastHitTime;
     public bool alive
     {
         get
         {
             return this.currentHealth > 0f;
         }
+
     }
 
     public float maxHealth
@@ -35,11 +37,11 @@ public class Health : NetworkBehaviour
         }
     }
 
-    public float timeSinceLastHit
+    public double timeSinceLastHit
     {
         get
         {
-            return Time.fixedTime - this.lastHitTime;
+            return NetworkTime.time - this.lastHitTime;
         }
     }
 
@@ -48,6 +50,7 @@ public class Health : NetworkBehaviour
     // Events
     public static event Action<Health, float> onCharacterHealServer;
     public static event Action<Health, DamageReport> onCharacterDamageServer;
+    public static event Action<Health, DamageReport> onCharacterDeathServer;
 
     public float Heal(float amount, GameObject healer = null, bool nonRegen = true)
     {
@@ -63,7 +66,7 @@ public class Health : NetworkBehaviour
         float num = this.currentHealth;
 
         CharacterObject healerCharacter = healer ? healer.GetComponent<CharacterObject>() : this.character;
-        float healReduction = this.character.GetStatusValue(StatusType.HealingReduced);
+        float healReduction = this.character.GetTotalStatusValue(StatusType.HealingReduced);
         float healPower = healerCharacter.GetStatValue(StatType.HealBuff);
         float netHealModifier = Mathf.Max(healPower - healReduction, -100);
 
@@ -71,11 +74,7 @@ public class Health : NetworkBehaviour
         this.currentHealth = Mathf.Min(this.maxHealth, this.currentHealth += num);
         if (nonRegen)
         {
-            Action<Health, float> action = Health.onCharacterHealServer;
-            if (action != null)
-            {
-                action(this, amount);
-            }
+            Health.onCharacterHealServer(this, num);
         }
         return num;
     }
@@ -102,7 +101,8 @@ public class Health : NetworkBehaviour
         float damageReduction = this.character.GetStatValue(StatType.DamageReduction);
         float netDamageModifier = Mathf.Max(damageBuff - damageReduction, -100);
 
-        float num = damageInfo.damage * (1f + (netDamageModifier * 0.01f));
+        float num = damageInfo.isFraction ? damageInfo.damage * 0.01f * this.maxHealth : damageInfo.damage; 
+        num *= (1f + (netDamageModifier * 0.01f));
 
         // Calculate reduction from resistence
         switch (damageInfo.damageType)
@@ -126,11 +126,12 @@ public class Health : NetworkBehaviour
         // Actually take the final value
         DamageReport damageReport = new DamageReport(damageInfo, num);
         this.currentHealth = Math.Max(this.currentHealth - num, 0f);
-        this.lastHitTime = Time.time;
-        Action<Health, DamageReport> action = Health.onCharacterDamageServer;
-        if (action != null)
+        this.lastHitTime = NetworkTime.time;
+        Health.onCharacterDamageServer(this, damageReport);
+
+        if (this.currentHealth == 0f)
         {
-            action(this, damageReport);
+            Health.onCharacterDeathServer(this, damageReport);
         }
         return num;
     }
@@ -141,5 +142,12 @@ public class Health : NetworkBehaviour
         currentHealth = maxHealth;
         this.character = base.GetComponent<CharacterObject>();
         this.lastHitTime = float.NegativeInfinity;
+    }
+
+    public void FixedUpdate()
+    {
+        // TODO: Change this to do a heal per status so that healer can be properly attributed. Also the same for DoT
+        float healingOverTime = this.character.GetTotalStatusValue(StatusType.HealingOverTime);
+        Heal(healingOverTime * Time.deltaTime);
     }
 }
