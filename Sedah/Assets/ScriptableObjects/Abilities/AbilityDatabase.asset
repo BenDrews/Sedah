@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: AbilityDatabase
   m_EditorClassIdentifier: 
   Abilities:
-  - {fileID: 11400000, guid: fdfd586b27d16ac49a4a2ca87a8ea664, type: 2}
+  - {fileID: 3382352063740128489, guid: 38f22021b24551a449399d1086a129d4, type: 3}

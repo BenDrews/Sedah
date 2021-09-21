@@ -20,6 +20,7 @@ GameObject:
   - component: {fileID: 7663989852764281415}
   - component: {fileID: 2524789960037904295}
   - component: {fileID: 5612151026507344901}
+  - component: {fileID: 8361018299471900629}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -219,6 +220,7 @@ MonoBehaviour:
   syncInterval: 0.1
   AbilityDatabase: {fileID: 11400000, guid: bd90ddd6416ca354792eaea05b0ceb41, type: 2}
   character: {fileID: 11400000, guid: e5758064760e01e4c9e62ea12b103192, type: 2}
+  Abilities: []
 --- !u!114 &2524789960037904295
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -245,6 +247,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 49766149be357484392e39c5e32cd7fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+--- !u!114 &8361018299471900629
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1960080401273295257}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c48b3278af5b61246abbbf203a9250e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   syncMode: 0

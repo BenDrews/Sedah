@@ -1,58 +1,57 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using Mirror;
 
-[CreateAssetMenu(fileName = "Ability", menuName = "ScriptableObjects/Ability")]
-public class Ability : ScriptableObject
+[System.Serializable]
+public abstract class Ability: NetworkBehaviour
 {
-    [SerializeField] private int id;
-    [SerializeField] private Sprite sprite; // Drag & drop the sprite. It does not need to be in the `Resources` folder
-    [SerializeField, Range(0, 999)] private int cost = 0;
-    [SerializeField, Range(0, 999)] private int damage = 0;
-    [SerializeField] private string target  = "";
-    [SerializeField] private string effect = "";
+    [SerializeField] protected int ID;
+    [SerializeField] protected Sprite Sprite; // Drag & drop the sprite. It does not need to be in the `Resources` folder
+    [SerializeField, Range(0, 999)] protected int Cost = 0;
+    [SerializeField, Range(0, 999)] protected int Damage = 0;
+    [SerializeField] protected string Target = "";
+    [SerializeField] protected string Effect = "";
+    [SerializeField] protected int CooldownTime = 0;
+    [SerializeField] protected bool OnCooldown = false;
+    [SerializeField] protected Coroutine RunCd;
 
-    public int ID
+    // Start is called before the first frame update
+    void Start()
     {
-        get { return id; }
-        private set { id = value; }
+        
     }
 
-    public Sprite Sprite
+    // Update is called once per frame
+    void Update()
     {
-        get { return sprite; }
-        private set { sprite = value; }
+        
     }
 
-    public int Cost
+    public IEnumerator RunCooldown()
     {
-        get { return cost; }
-        private set { cost = value; }
+        OnCooldown = true;
+        yield return new WaitForSeconds(CooldownTime);
+        OnCooldown = false;
     }
 
-    public int Damage
+    public abstract void Activate(GameObject gameObject1 = null, GameObject gameObject2 = null);
+
+
+    public bool IsOnCooldown()
     {
-        get { return damage; }
-        private set { damage = value; }
+        return OnCooldown;
     }
 
-    public string Target
+    public int GetCost()
     {
-        get { return target; }
-        private set { target = value; }
+        return Cost;
     }
 
-    public string Effect
+    public void SetCooldown(bool cd)
     {
-        get { return effect; }
-        private set { effect = value; }
+        OnCooldown = cd;
     }
 
-    public Ability(int id, Sprite sprite, int cost, int damage, string target, string effect)
-    {
-        ID = id;
-        Sprite = sprite;
-        Cost = cost;
-        Damage = damage;
-        Target = target;
-        Effect = effect;
-    }
 }
