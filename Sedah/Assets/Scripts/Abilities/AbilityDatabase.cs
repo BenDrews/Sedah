@@ -6,25 +6,25 @@ using UnityEngine;
 
 public class AbilityDatabase : ScriptableObject, ISerializationCallbackReceiver
 {
-    public Ability[] Abilities;
-    public Dictionary<int, Ability> getAbility = new Dictionary<int, Ability>();
+    public GameObject[] Abilities;
+    public Dictionary<int, GameObject> getAbility = new Dictionary<int, GameObject>();
 
     public void OnAfterDeserialize()
     {
-        getAbility = new Dictionary<int, Ability>();
+        getAbility = new Dictionary<int, GameObject>();
         for (int i = 0; i < Abilities.Length; i++)
         {
             getAbility.Add(i, Abilities[i]);
         }
     }
 
-    public Ability GetAbility(int id)
+    public GameObject GetAbility(int id)
     {
         return getAbility[id];
     }
 
     public void OnBeforeSerialize()
     {
-        getAbility = new Dictionary<int, Ability>();
+        getAbility = new Dictionary<int, GameObject>();
     }
 }

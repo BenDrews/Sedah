@@ -52,14 +52,16 @@ public class PlayerAutoAttack : NetworkBehaviour
             }
         }
 
-        // Check if target is in range
-        float dist = Vector3.Distance(transform.position, target.transform.position);
-        if (dist <= this.character.GetStatValue(StatType.AttackRange))
-        {
-            CmdAutoAttack(target);
-        } else
-        {
-            this.GetComponent<PlayerMovement>()?.CmdMove(target.transform.position);
+        if (character.stateMachine.GetState().type == EntityStateType.AutoAttacking) { 
+            // Check if target is in range
+            float dist = Vector3.Distance(transform.position, target.transform.position);
+            if (dist <= this.character.GetStatValue(StatType.AttackRange))
+            {
+                CmdAutoAttack(target);
+            } else
+            {
+                this.GetComponent<PlayerMovement>()?.CmdMove(target.transform.position);
+            }
         }
     }
 }

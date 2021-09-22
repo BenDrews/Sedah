@@ -10,17 +10,20 @@ public class CharacterObject : NetworkBehaviour
     [SerializeField] private Character character;
 
     //Stats for the PlayerCharacter
-    private readonly SyncDictionary<StatType, Stat> CharacterStats = new SyncDictionary<StatType, Stat>();
+    private Dictionary<StatType, Stat> CharacterStats = new Dictionary<StatType, Stat>();
 
     //Status Effects for the PlayerCharacter
-    private readonly SyncDictionary<StatusType, List<Status>> StatusEffects = new SyncDictionary<StatusType, List<Status>>();
-    private readonly SyncList<Ability> Abilities = new SyncList<Ability>();
+    private readonly Dictionary<StatusType, List<Status>> StatusEffects = new Dictionary<StatusType, List<Status>>();
+    private readonly List<GameObject> Abilities = new List<GameObject>();
     private int Gold = 0;
     private int Level = 1;
+
+    // State machine for character
+    public EntityStateMachine stateMachine = new EntityStateMachine();
     
-    void Start()
+    public override void OnStartServer()
     {
-        
+
         CharacterStats.Add(StatType.Health, new Stat(character.Health, character.HealthPerLvl, StatType.Health));
         CharacterStats.Add(StatType.Mana, new Stat(character.Mana, character.ManaPerLvl, StatType.Mana));
         CharacterStats.Add(StatType.AttackDamage, new Stat(character.AttackDamage, character.ADPerLvl, StatType.AttackDamage));
@@ -37,7 +40,9 @@ public class CharacterObject : NetworkBehaviour
         List<int> abilities = character.GetAbilities();
         foreach (int a in abilities)
         {
-            Abilities.Add(AbilityDatabase.GetAbility(a));
+            GameObject obj = Instantiate(AbilityDatabase.GetAbility(a), transform);
+            NetworkServer.Spawn(obj);
+            Abilities.Add(obj);
         }   
     }
 
@@ -102,14 +107,14 @@ public class CharacterObject : NetworkBehaviour
         StatusEffects[status.StatusType].Add(status);
     }
 
-    public Ability GetAbility(int i)
+    public GameObject GetAbility(int i)
     {
         return Abilities[i];
     }
 
     public void AddAbility(int i)
     {
-        Abilities.Add(AbilityDatabase.GetAbility(i));
+        //Abilities.Add(AbilityDatabase.GetAbility(i));
     }
 
     public void AddStatModifier(StatModifier statModifier, StatType sType)
