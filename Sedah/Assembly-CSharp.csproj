@@ -55,26 +55,35 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Items\Inventory.cs" />
     <Compile Include="Assets\Scripts\CameraMovement.cs" />
+    <Compile Include="Assets\Scripts\Character\DamageType.cs" />
     <Compile Include="Assets\Scripts\Items\InventorySlot.cs" />
+    <Compile Include="Assets\Scripts\Character\DamageInfo.cs" />
     <Compile Include="Assets\Scripts\Mob\Mob.cs" />
     <Compile Include="Assets\Scripts\Dungeons\Floor.cs" />
     <Compile Include="Assets\Scripts\NetworkManagerGame.cs" />
     <Compile Include="Assets\Scripts\Abilities\Ability.cs" />
+    <Compile Include="Assets\Scripts\Character\PlayerAutoAttack.cs" />
     <Compile Include="Assets\Scripts\Abilities\AbilityDatabase.cs" />
     <Compile Include="Assets\Scripts\Character\StatModifier.cs" />
     <Compile Include="Assets\Scripts\Character\CharacterObject.cs" />
     <Compile Include="Assets\Scripts\Character\Character.cs" />
+    <Compile Include="Assets\Scripts\Character\DamageReport.cs" />
     <Compile Include="Assets\Scripts\Items\Item.cs" />
     <Compile Include="Assets\Scripts\Character\Stat.cs" />
     <Compile Include="Assets\Scripts\Items\ItemDatabase.cs" />
+    <Compile Include="Assets\Scripts\Character\Health.cs" />
     <Compile Include="Assets\Scripts\Character\Status.cs" />
     <Compile Include="Assets\Scripts\Character\PlayerMovement.cs" />
     <Compile Include="Assets\Scripts\Dungeons\Dungeon.cs" />
-    <Compile Include="Assets\Scripts\Character\Health.cs" />
-    <Compile Include="Assets\Scripts\Character\DamageInfo.cs" />
-    <Compile Include="Assets\Scripts\Character\DamageType.cs" />
-    <Compile Include="Assets\Scripts\Character\DamageReport.cs" />
-    <Compile Include="Assets\Scripts\Character\PlayerAutoAttack.cs" />
+    <Compile Include="Assets\Scripts\GetComponentsCache.cs" />
+    <Compile Include="Assets\Scripts\EntityStateIndex.cs" />
+    <Compile Include="Assets\Scripts\Uninitialized.cs" />
+    <Compile Include="Assets\Scripts\TestState1.cs" />
+    <Compile Include="Assets\Scripts\EntityStateMachine.cs" />
+    <Compile Include="Assets\Scripts\SerializableEntityStateType.cs" />
+    <Compile Include="Assets\Scripts\TestState2.cs" />
+    <Compile Include="Assets\Scripts\EntityState.cs" />
+    <Compile Include="Assets\Scripts\ModelLocator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Mirror\Plugins\Mono.Cecil\Mono.CecilX.dll" />

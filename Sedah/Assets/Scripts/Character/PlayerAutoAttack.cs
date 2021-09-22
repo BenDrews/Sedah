@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Sedah;
 using Mirror;
 
 [RequireComponent(typeof(CharacterObject))]
 public class PlayerAutoAttack : NetworkBehaviour
 {
     private CharacterObject character;
+    public GameObject target;
     [SyncVar]
     private double timeLastAttacked;
     [Command]
@@ -44,13 +46,20 @@ public class PlayerAutoAttack : NetworkBehaviour
                 GameObject obj = hit.transform.gameObject;
                 if (obj.GetComponent<Health>() != null)
                 {
-                    float dist = Vector3.Distance(transform.position, obj.transform.position);
-                    if (dist <= this.character.GetStatValue(StatType.AttackRange))
-                    {
-                        CmdAutoAttack(obj);
-                    }
+                    // Set our character state                    
+                    target = obj;
                 }
             }
+        }
+
+        // Check if target is in range
+        float dist = Vector3.Distance(transform.position, target.transform.position);
+        if (dist <= this.character.GetStatValue(StatType.AttackRange))
+        {
+            CmdAutoAttack(target);
+        } else
+        {
+            this.GetComponent<PlayerMovement>()?.CmdMove(target.transform.position);
         }
     }
 }

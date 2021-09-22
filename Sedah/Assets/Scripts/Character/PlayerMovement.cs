@@ -15,6 +15,12 @@ namespace Sedah
             agent = GetComponent<NavMeshAgent>();
         }
 
+        [Command]
+        public void CmdMove(Vector3 pos)
+        {
+            agent.SetDestination(pos);
+        }
+
 
         private void Update()
         {
@@ -28,7 +34,7 @@ namespace Sedah
                     // TODO: Find a better way to represent the terrain layer
                     if (hit.transform.gameObject.layer == 7)
                     {
-                        agent.SetDestination(hit.point);
+                        CmdMove(hit.point);
                     }
                 }
             }
