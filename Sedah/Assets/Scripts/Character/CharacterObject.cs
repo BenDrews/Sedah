@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Linq;
 using Mirror;
 
+[RequireComponent(typeof(EntityStateMachine))]
 public class CharacterObject : NetworkBehaviour
 {
     [SerializeField] private AbilityDatabase AbilityDatabase;
@@ -18,12 +19,10 @@ public class CharacterObject : NetworkBehaviour
     private int Gold = 0;
     private int Level = 1;
 
-    // State machine for character
-    public EntityStateMachine stateMachine = new EntityStateMachine();
+    private EntityStateMachine stateMachine;
     
     public override void OnStartServer()
     {
-
         CharacterStats.Add(StatType.Health, new Stat(character.Health, character.HealthPerLvl, StatType.Health));
         CharacterStats.Add(StatType.Mana, new Stat(character.Mana, character.ManaPerLvl, StatType.Mana));
         CharacterStats.Add(StatType.AttackDamage, new Stat(character.AttackDamage, character.ADPerLvl, StatType.AttackDamage));
@@ -43,7 +42,10 @@ public class CharacterObject : NetworkBehaviour
             GameObject obj = Instantiate(AbilityDatabase.GetAbility(a), transform);
             NetworkServer.Spawn(obj);
             Abilities.Add(obj);
-        }   
+        }
+
+        stateMachine = GetComponent<EntityStateMachine>();
+        stateMachine.SetNextState(new IdlingState(stateMachine));
     }
 
     // Update is called once per frame

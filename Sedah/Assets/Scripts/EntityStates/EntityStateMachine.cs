@@ -3,10 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 
-public class EntityStateMachine: NetworkBehaviour
+public class EntityStateMachine : NetworkBehaviour
 {
     protected EntityState state;
     protected EntityState nextState;
+
+    public void Awake()
+    {
+        state = new IdlingState(this);
+    }
 
     public void SetNextState(EntityState state)
     {

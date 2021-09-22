@@ -5,37 +5,62 @@ using Sedah;
 using Mirror;
 
 [RequireComponent(typeof(CharacterObject))]
+[RequireComponent(typeof(EntityStateMachine))]
 public class PlayerAutoAttack : NetworkBehaviour
 {
     private CharacterObject character;
     public GameObject target;
     [SyncVar]
     private double timeLastAttacked;
+
     [Command]
-    private void CmdAutoAttack(GameObject target)
+    private void CmdSetAutoAttackState(GameObject target)
     {
-        float damage = character.GetStatValue(StatType.AttackDamage);
-        float attackSpeed = character.GetStatValue(StatType.AttackSpeed);
-        DamageInfo dmgInfo = new DamageInfo(damage, gameObject, target.transform.position, DamageType.Physical);
-        target.GetComponent<Health>().TakeDamage(dmgInfo);
-        timeLastAttacked = NetworkTime.time;
+        EntityStateMachine stateMachine = GetComponent<EntityStateMachine>();
+        stateMachine.SetNextState(new AutoAttackingState(stateMachine));
+        this.target = target;
+
     }
 
+    private void AutoAttack(GameObject target)
+    {
+        EntityStateMachine stateMachine = GetComponent<EntityStateMachine>();
+        if (stateMachine.GetState().type == EntityStateType.AutoAttacking)
+        {
+            // Check if target is in range
+            float dist = Vector3.Distance(transform.position, target.transform.position);
+            if (dist <= this.character.GetStatValue(StatType.AttackRange))
+            {
+                float damage = character.GetStatValue(StatType.AttackDamage);
+                float attackSpeed = character.GetStatValue(StatType.AttackSpeed);
+                DamageInfo dmgInfo = new DamageInfo(damage, gameObject, target.transform.position, DamageType.Physical);
+                target.GetComponent<Health>().TakeDamage(dmgInfo);
+                timeLastAttacked = NetworkTime.time;
+            }
+            else
+            {
+                this.GetComponent<PlayerMovement>()?.CmdMove(target.transform.position);
+            }
+        }
+    }
+
+    // This script should only exist on the local player
     private void Start()
     {
         if (NetworkClient.localPlayer.netId == base.netId)
         {
-            this.character = base.GetComponent<CharacterObject>();
-        } else
+            this.character = GetComponent<CharacterObject>();
+        }
+        else
         {
             Destroy(this);
         }
-
     }
 
     // Update is called once per frame
     void Update()
     {
+        EntityStateMachine stateMachine = GetComponent<EntityStateMachine>();
         if (Input.GetMouseButtonDown(1))
         {
             RaycastHit hit;
@@ -46,22 +71,14 @@ public class PlayerAutoAttack : NetworkBehaviour
                 GameObject obj = hit.transform.gameObject;
                 if (obj.GetComponent<Health>() != null)
                 {
-                    // Set our character state                    
-                    target = obj;
+                    CmdSetAutoAttackState(obj);
                 }
             }
         }
 
-        if (character.stateMachine.GetState().type == EntityStateType.AutoAttacking) { 
-            // Check if target is in range
-            float dist = Vector3.Distance(transform.position, target.transform.position);
-            if (dist <= this.character.GetStatValue(StatType.AttackRange))
-            {
-                CmdAutoAttack(target);
-            } else
-            {
-                this.GetComponent<PlayerMovement>()?.CmdMove(target.transform.position);
-            }
+        if (NetworkServer.active)
+        {
+            AutoAttack(target);
         }
     }
 }
