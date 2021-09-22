@@ -43,42 +43,39 @@ public class PlayerAutoAttack : NetworkBehaviour
             }
         }
     }
-
-    // This script should only exist on the local player
-    private void Start()
+    public override void OnStartClient()
     {
-        if (NetworkClient.localPlayer.netId == base.netId)
-        {
-            this.character = GetComponent<CharacterObject>();
-        }
-        else
-        {
-            Destroy(this);
-        }
+        base.OnStartClient();
+        this.character = GetComponent<CharacterObject>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        EntityStateMachine stateMachine = GetComponent<EntityStateMachine>();
-        if (Input.GetMouseButtonDown(1))
+        if (hasAuthority)
         {
-            RaycastHit hit;
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            LayerMask layerMask = LayerMask.GetMask("TargetableCharacters");
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
+            EntityStateMachine stateMachine = GetComponent<EntityStateMachine>();
+            if (Input.GetMouseButtonDown(1))
             {
-                GameObject obj = hit.transform.gameObject;
-                if (obj.GetComponent<Health>() != null)
+                RaycastHit hit;
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                LayerMask layerMask = LayerMask.GetMask("TargetableCharacters");
+                if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
                 {
-                    CmdSetAutoAttackState(obj);
+                    GameObject obj = hit.transform.gameObject;
+                    if (obj.GetComponent<Health>() != null)
+                    {
+                        CmdSetAutoAttackState(obj);
+                    }
                 }
+            }
+
+            if (isServer)
+            {
+                AutoAttack(target);
             }
         }
 
-        if (NetworkServer.active)
-        {
-            AutoAttack(target);
-        }
+
     }
 }

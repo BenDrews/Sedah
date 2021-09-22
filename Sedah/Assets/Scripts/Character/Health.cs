@@ -151,17 +151,23 @@ public class Health : NetworkBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
+    public override void OnStartServer()
     {
-        this.character = base.GetComponent<CharacterObject>();
+        base.OnStartClient();
+        this.character = this.GetComponent<CharacterObject>();
         this.currentHealth = this.maxHealth;
         this.lastHitTime = float.NegativeInfinity;
     }
 
+
     public void FixedUpdate()
     {
-        // TODO: Change this to do a heal per status so that healer can be properly attributed. Also the same for DoT
-        float healingOverTime = this.character.GetTotalStatusValue(StatusType.HealingOverTime);
-        Heal(healingOverTime * Time.deltaTime);
+        if (isServer)
+        {
+            // TODO: Change this to do a heal per status so that healer can be properly attributed. Also the same for DoT
+            float healingOverTime = this.character.GetTotalStatusValue(StatusType.HealingOverTime);
+            Heal(healingOverTime * Time.deltaTime);
+        }
+
     }
 }

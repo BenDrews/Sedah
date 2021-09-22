@@ -46,10 +46,10 @@ public class CameraMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (NetworkClient.localPlayer == null)
-        {
-            Destroy(this);
-        }
+        //if (NetworkClient.localPlayer == null)
+        //{
+        //    Destroy(this);
+        //}
         if (!lockedMode)
         {
             if (Input.GetMouseButton(2))
