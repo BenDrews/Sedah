@@ -15,7 +15,8 @@ public class CharacterObject : NetworkBehaviour
 
     //Status Effects for the PlayerCharacter
     private readonly Dictionary<StatusType, List<Status>> StatusEffects = new Dictionary<StatusType, List<Status>>();
-    private readonly List<GameObject> Abilities = new List<GameObject>();
+    [SerializeField]private readonly List<GameObject> Abilities = new List<GameObject>();
+
     private int Gold = 0;
     private int Level = 1;
 

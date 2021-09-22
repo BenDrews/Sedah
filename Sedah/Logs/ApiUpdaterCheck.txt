@@ -349,6 +349,7 @@ candidates check time : 35ms
 console write time    : 1ms
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 [api-updater (non-obsolete-error-filter)] 9/21/2021 1:20:31 AM : Starting C:/Program Files/Unity/Hub/Editor/2020.3.18f1/Editor/Data/Tools/ScriptUpdater/APIUpdater.NonObsoleteApiUpdaterDetector.exe
 [api-updater (non-obsolete-error-filter)] 
 ----------------------------------
@@ -368,6 +369,8 @@ candidates parse time : 0ms
 C# parse time         : 145ms
 candidates check time : 59ms
 =======
+=======
+>>>>>>> 7fc758720fcf1dc633d372d8b5ad216dc4c66c86
 [api-updater (non-obsolete-error-filter)] 9/21/2021 2:04:32 PM : Starting C:/Program Files/Unity/Hub/Editor/2020.3.13f1/Editor/Data/Tools/ScriptUpdater/APIUpdater.NonObsoleteApiUpdaterDetector.exe
 [api-updater (non-obsolete-error-filter)] 
 ----------------------------------
@@ -586,6 +589,7 @@ moved types parse time: 41ms
 candidates parse time : 1ms
 C# parse time         : 168ms
 candidates check time : 21ms
+<<<<<<< HEAD
 >>>>>>> 7fc758720fcf1dc633d372d8b5ad216dc4c66c86
 console write time    : 0ms
 
@@ -687,5 +691,24 @@ moved types parse time: 38ms
 candidates parse time : 0ms
 C# parse time         : 145ms
 candidates check time : 33ms
+=======
+>>>>>>> 7fc758720fcf1dc633d372d8b5ad216dc4c66c86
+console write time    : 0ms
+
+[api-updater (non-obsolete-error-filter)] 9/22/2021 2:19:30 AM : Starting C:/Program Files/Unity/Hub/Editor/2020.3.18f1/Editor/Data/Tools/ScriptUpdater/APIUpdater.NonObsoleteApiUpdaterDetector.exe
+[api-updater (non-obsolete-error-filter)] Exception caught while loading types from C:\Users\Ben\Documents\Sedah\Sedah\Library\ScriptAssemblies\Unity.TextMeshPro.Editor.dll (some types may not be loaded)
+	Exception of type 'System.Reflection.ReflectionTypeLoadException' was thrown.
+	  at (wrapper managed-to-native) System.Reflection.Assembly.GetTypes(System.Reflection.Assembly,bool)
+  at System.Reflection.Assembly.GetTypes () [0x00000] in <695d1cc93cca45069c528c15c9fdd749>:0 
+  at APIUpdater.NonObsoleteApiUpdaterDetector.ExtraInfoParser+<LoadTypesWithMovedFromAttributeAsync>d__3.MoveNext () [0x000c8] in <68bff7873e0e4aa69a14dfc30bebbe3e>:0 
+	Could not load file or assembly 'UnityEditor.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null' or one of its dependencies.
+
+[api-updater (non-obsolete-error-filter)] 
+----------------------------------
+jit/startup time      : 64.8262ms
+moved types parse time: 38ms
+candidates parse time : 0ms
+C# parse time         : 140ms
+candidates check time : 21ms
 console write time    : 0ms
 

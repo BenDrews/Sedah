@@ -53,6 +53,7 @@
     <UnityVersion>2020.3.18f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\EntityStates\IdlingState.cs" />
     <Compile Include="Assets\Scripts\Items\Inventory.cs" />
     <Compile Include="Assets\Scripts\CameraMovement.cs" />
     <Compile Include="Assets\Scripts\Character\DamageType.cs" />
@@ -65,9 +66,12 @@
     <Compile Include="Assets\Scripts\NetworkManagerGame.cs" />
     <Compile Include="Assets\Scripts\Abilities\AbilityDataObject.cs" />
     <Compile Include="Assets\Scripts\Abilities\Ability.cs" />
+    <Compile Include="Assets\Scripts\EntityStates\EntityStateNames.cs" />
+    <Compile Include="Assets\Scripts\EntityStates\AutoAttacking.cs" />
     <Compile Include="Assets\Scripts\Character\PlayerAutoAttack.cs" />
     <Compile Include="Assets\Scripts\Abilities\AbilityDatabase.cs" />
     <Compile Include="Assets\Scripts\Character\StatModifier.cs" />
+    <Compile Include="Assets\Scripts\EntityStates\MovingState.cs" />
     <Compile Include="Assets\Scripts\Character\CharacterObject.cs" />
     <Compile Include="Assets\Scripts\Character\Character.cs" />
     <Compile Include="Assets\Scripts\Character\DamageReport.cs" />
@@ -80,10 +84,6 @@
     <Compile Include="Assets\Scripts\Character\PlayerMovement.cs" />
     <Compile Include="Assets\Scripts\EntityStates\EntityState.cs" />
     <Compile Include="Assets\Scripts\Dungeons\Dungeon.cs" />
-    <Compile Include="Assets\Scripts\EntityStates\AutoAttacking.cs" />
-    <Compile Include="Assets\Scripts\EntityStates\IdlingState.cs" />
-    <Compile Include="Assets\Scripts\EntityStates\MovingState.cs" />
-    <Compile Include="Assets\Scripts\EntityStates\EntityStateNames.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Mirror\Plugins\Mono.Cecil\Mono.CecilX.dll" />
