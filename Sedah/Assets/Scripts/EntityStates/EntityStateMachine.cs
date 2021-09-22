@@ -3,24 +3,33 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 
-public abstract class EntityStateMachine: NetworkBehaviour
+public class EntityStateMachine : NetworkBehaviour
 {
-    protected EntityState State;
+    protected EntityState state;
+    protected EntityState nextState;
 
-    public void SetState(EntityState state)
+    public void Awake()
     {
-        State = state;
-        StartCoroutine(State.Start());
-    }
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+        state = new IdlingState(this);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void SetNextState(EntityState state)
     {
-        
+        nextState = state;
+    }
+
+    public EntityState GetState()
+    {
+        return state;
+    }
+
+    public void Update()
+    {
+        if (nextState != null)
+        {
+            state.OnExit();
+            state = nextState;
+            nextState.OnEnter();
+        }
     }
 }

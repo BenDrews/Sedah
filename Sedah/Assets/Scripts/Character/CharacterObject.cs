@@ -1,27 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 using Mirror;
 
+[RequireComponent(typeof(EntityStateMachine))]
 public class CharacterObject : NetworkBehaviour
 {
     [SerializeField] private AbilityDatabase AbilityDatabase;
     [SerializeField] private Character character;
 
     //Stats for the PlayerCharacter
-    private Dictionary<StatType, Stat> CharacterStats;
+    private Dictionary<StatType, Stat> CharacterStats = new Dictionary<StatType, Stat>();
 
     //Status Effects for the PlayerCharacter
-    private Dictionary<StatusType, Status> StatusEffects;
-    [SerializeField] private List<GameObject> Abilities;
+    private readonly Dictionary<StatusType, List<Status>> StatusEffects = new Dictionary<StatusType, List<Status>>();
+    [SerializeField]private readonly List<GameObject> Abilities = new List<GameObject>();
+
     private int Gold = 0;
     private int Level = 1;
+
+    private EntityStateMachine stateMachine;
     
     public override void OnStartServer()
     {
-
-        CharacterStats = new Dictionary<StatType, Stat>();
-        StatusEffects = new Dictionary<StatusType, Status>();
         CharacterStats.Add(StatType.Health, new Stat(character.Health, character.HealthPerLvl, StatType.Health));
         CharacterStats.Add(StatType.Mana, new Stat(character.Mana, character.ManaPerLvl, StatType.Mana));
         CharacterStats.Add(StatType.AttackDamage, new Stat(character.AttackDamage, character.ADPerLvl, StatType.AttackDamage));
@@ -41,7 +43,10 @@ public class CharacterObject : NetworkBehaviour
             GameObject obj = Instantiate(AbilityDatabase.GetAbility(a), transform);
             NetworkServer.Spawn(obj);
             Abilities.Add(obj);
-        }   
+        }
+
+        stateMachine = GetComponent<EntityStateMachine>();
+        stateMachine.SetNextState(new IdlingState(stateMachine));
     }
 
     // Update is called once per frame
@@ -66,7 +71,7 @@ public class CharacterObject : NetworkBehaviour
         return CharacterStats[sType];
     }
 
-    public Status GetStatus(StatusType stType)
+    public List<Status> GetStatus(StatusType stType)
     {
         return StatusEffects[stType];
     }
@@ -88,17 +93,21 @@ public class CharacterObject : NetworkBehaviour
 
     public float GetTotalStatusValue(StatusType stType)
     {
-        return 0f;
+        return HasStatus(stType) ? StatusEffects[stType].Select(x => x.Value).Sum() : 0f;
     }
 
     public float GetMaxStatusValue(StatusType stType)
     {
-            return 0f;
+        return HasStatus(stType) ? StatusEffects[stType].Select(x => x.Value).Max() : 0f;
     }
 
     public void AddStatus(Status status)
     {
-        StatusEffects.Add(status.StatusType, status);
+        if (!StatusEffects.ContainsKey(status.StatusType))
+        {
+            StatusEffects.Add(status.StatusType, new List<Status>());
+        }
+        StatusEffects[status.StatusType].Add(status);
     }
 
     public GameObject GetAbility(int i)

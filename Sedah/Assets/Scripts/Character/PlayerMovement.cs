@@ -6,17 +6,31 @@ using Mirror;
 
 namespace Sedah
 {
+    [RequireComponent(typeof(EntityStateMachine))]
     public class PlayerMovement : NetworkBehaviour
     {
-        NavMeshAgent agent;
+        private NavMeshAgent agent;
         public float movementSpeed = 30;
         private void Start()
-        {            
+        {
+            // This script should only exist on the local player
+            if (NetworkClient.localPlayer.netId != base.netId)
+            {
+                Destroy(this);
+            }
             agent = GetComponent<NavMeshAgent>();
         }
 
+        [Command]
+        public void CmdMove(Vector3 pos)
+        {                       
+            agent.SetDestination(pos);
+            EntityStateMachine stateMachine = GetComponent<EntityStateMachine>();
+            stateMachine.SetNextState(new MovingState(stateMachine));
+        }
 
-        private void Update()
+
+        public void Update()
         {
             if (Input.GetMouseButtonDown(1))
             {
@@ -26,9 +40,9 @@ namespace Sedah
                 if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
                 {
                     // TODO: Find a better way to represent the terrain layer
-                    if (hit.transform.gameObject.layer == 7)
+                    if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Terrain"))
                     {
-                        agent.SetDestination(hit.point);
+                        CmdMove(hit.point);
                     }
                 }
             }
