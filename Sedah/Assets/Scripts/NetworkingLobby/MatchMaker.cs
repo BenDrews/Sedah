@@ -135,6 +135,7 @@ namespace SedahNetworking
 
         public void BeginGame(string _matchID)
         {
+            NetworkManager.singleton.ServerChangeScene("BenScene");
             for (int i = 0; i < matches.Count; i++)
             {
                 if (matches[i].matchID == _matchID)
@@ -148,7 +149,7 @@ namespace SedahNetworking
                     break;
                 }
             }
-            NetworkManager.singleton.ServerChangeScene("BenScene");
+
         }
 
         public static string GetRandomMatchID()

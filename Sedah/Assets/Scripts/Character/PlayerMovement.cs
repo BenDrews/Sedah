@@ -14,22 +14,23 @@ namespace Sedah
         public float movementSpeed = 30;
         private void Start()
         {
-            //// This script should only exist on the local player
-            //if (NetworkClient.localPlayer.netId != base.netId)
-            //{
-            //    Destroy(this);
-            //}
-            if (hasAuthority)
+            if (isLocalPlayer)
             {
                 agent = GetComponent<NavMeshAgent>();
             }
-            Debug.Log(agent);
+        }
+
+        public override void OnStartServer()
+        {
+            base.OnStartServer();
+            agent = GetComponent<NavMeshAgent>();
         }
 
         [Command]
         public void CmdMove(Vector3 pos)
-        {                       
+        {
             agent.SetDestination(pos);
+
             Debug.Log(pos);
             EntityStateMachine stateMachine = GetComponent<EntityStateMachine>();
             stateMachine.SetNextState(new MovingState(stateMachine));
@@ -39,19 +40,16 @@ namespace Sedah
         {
             if (hasAuthority)
             {
-                if (Input.GetKeyDown(KeyCode.P))
+                if (Input.GetMouseButtonDown(1))
                 {
                     RaycastHit hit;
                     LayerMask layerMask = LayerMask.GetMask("Terrain", "TargetableCharacters");
                     Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                    Debug.Log(ray);
-                    Debug.Log(layerMask);
                     if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
                     {
                         // TODO: Find a better way to represent the terrain layer
                         if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Terrain"))
                         {
-                            Debug.Log(hit.point);
                             CmdMove(hit.point);
                         }
                     }

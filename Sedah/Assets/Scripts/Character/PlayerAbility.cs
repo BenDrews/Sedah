@@ -17,6 +17,12 @@ public class PlayerAbility : NetworkBehaviour
 
     }
 
+    public override void OnStartServer()
+    {
+        base.OnStartServer();
+        this.character = base.GetComponent<CharacterObject>();
+    }
+
     // Update is called once per frame
     void Update()
     {

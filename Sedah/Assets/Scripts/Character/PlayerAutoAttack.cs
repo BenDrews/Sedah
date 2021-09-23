@@ -51,6 +51,12 @@ public class PlayerAutoAttack : NetworkBehaviour
         }
     }
 
+    public override void OnStartServer()
+    {
+        base.OnStartServer();
+        this.character = GetComponent<CharacterObject>();
+    }
+
     // Update is called once per frame
     void Update()
     {

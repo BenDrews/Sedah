@@ -27,9 +27,9 @@ public class Player : NetworkBehaviour
 
     public override void OnStartClient()
     {
+        DontDestroyOnLoad(this.gameObject);
         if (isLocalPlayer)
         {
-            DontDestroyOnLoad(this.gameObject);
             localPlayer = this;
         }
         else
@@ -224,55 +224,24 @@ public class Player : NetworkBehaviour
     void TargetBeginGame()
     {
         Debug.Log($"MatchID: {matchID} | Beginning");
-        //SceneManager.LoadScene(2, LoadSceneMode.Additive);
-        //Additively load game scene
-        //Scene scene = SceneManager.GetSceneByName("BenScene");
-        //StartCoroutine(WaitLoadClient(scene));
-        //CmdMoveObject();
-        CmdSpawn();
+        Scene scene = SceneManager.GetSceneByName("BenScene");
+        StartCoroutine(WaitLoadClient(scene));
     }
 
-    [Command]
-    void CmdMoveObject(NetworkConnectionToClient conn = null)
-    {
-
-    }
-
-    IEnumerator WaitLoadServer(Scene scene)
-    {
-        yield return scene.isLoaded;
-        //SceneManager.MoveGameObjectToScene(this.gameObject, scene);
-        //GameObject.Find("Main Camera").SetActive(false);
-        SceneManager.SetActiveScene(scene);
-
-
-    }
-
-    [Command]
-    void CmdSpawn(NetworkConnectionToClient conn = null)
-    {
-        Debug.Log("Spawn");
-        GameObject spawn = Instantiate(playerSpawn);
-        //GameObject spawn2 = Instantiate(this.gameObject);
-        NetworkServer.Spawn(spawn, conn);
-    }
     IEnumerator WaitLoadClient(Scene scene)
     {
         yield return scene.isLoaded;
-        GameObject.Find("Main Camera").SetActive(false);
-        SceneManager.SetActiveScene(scene);
-        CmdSpawn();
-        //Instantiate(this.gameObject);
-        //this.GetComponent<EntityStateMachine>().enabled = true;
-        //this.GetComponent<PlayerMovement>().enabled = true;
-        //this.GetComponent<Health>().enabled = true;
-        //this.GetComponent<CharacterObject>().enabled = true;
-        //this.GetComponent<Player>().enabled = true;
+        this.GetComponent<EntityStateMachine>().enabled = true;
+        this.GetComponent<NavMeshAgent>().enabled = true;
+        this.GetComponent<MeshRenderer>().enabled = true;
+        this.GetComponent<CapsuleCollider>().enabled = true;
+        this.GetComponent<Health>().enabled = true;
+        this.GetComponent<CharacterObject>().enabled = true;
+        this.GetComponent<Player>().enabled = true;
         //this.GetComponent<PlayerCamera>().enabled = true;
-        //this.GetComponent<PlayerAutoAttack>().enabled = true;
-        //this.GetComponent<PlayerAbility>().enabled = true;
-        //this.GetComponent<NavMeshAgent>().enabled = true;
-        //this.GetComponent<MeshRenderer>().enabled = true;
+        this.GetComponent<PlayerAutoAttack>().enabled = true;
+        this.GetComponent<PlayerAbility>().enabled = true;
+        this.GetComponent<PlayerMovement>().enabled = true;
     }
 
 }

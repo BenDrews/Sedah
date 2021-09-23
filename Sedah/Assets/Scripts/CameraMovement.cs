@@ -29,27 +29,23 @@ public class CameraMovement : MonoBehaviour
 
         if (lockedMode)
         {
-            //Vector3 playerPos = NetworkClient.localPlayer.transform.position;
-            //playerPos.x -= cameraDistance;
-            //playerPos.z -= cameraDistance;
-            //transform.position = playerPos;
+            Vector3 playerPos = NetworkClient.localPlayer.transform.position;
+            playerPos.x -= cameraDistance;
+            playerPos.z -= cameraDistance;
+            transform.position = playerPos;
         }
 
         if (!lockedMode)
         {
             if (Input.GetMouseButtonDown(2))
             {
-                //buttonDownMousePosition = Input.mousePosition;
+                buttonDownMousePosition = Input.mousePosition;
             }
         } 
     }
 
     private void FixedUpdate()
     {
-        //if (NetworkClient.localPlayer == null)
-        //{
-        //    Destroy(this);
-        //}
         if (!lockedMode)
         {
             if (Input.GetMouseButton(2))
