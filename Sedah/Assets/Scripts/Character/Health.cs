@@ -49,9 +49,11 @@ public class Health : NetworkBehaviour
     public bool invulnerable { get; set; }
 
     // Events
-    public static event Action<Health, float> onCharacterHealServer;
-    public static event Action<Health, DamageReport> onCharacterDamageServer;
-    public static event Action<Health, DamageReport> onCharacterDeathServer;
+    public static event Action<Health, float> OnCharacterHealedServer;
+    public static event Action<Health, DamageReport> OnCharacterDamagedServer;
+    public static event Action<Health, DamageReport> OnCharacterDeathServer;
+
+    public event Action<Health, float> OnHealthChanged;
 
     public float Heal(float amount, GameObject healer = null, bool nonRegen = true)
     {
@@ -75,12 +77,18 @@ public class Health : NetworkBehaviour
         this.currentHealth = Mathf.Min(this.maxHealth, this.currentHealth += num);
         if (nonRegen)
         {
-            Action<Health, float> healAction = Health.onCharacterHealServer;
+            Action<Health, float> healAction = Health.OnCharacterHealedServer;
             if (healAction != null)
             {
                 healAction(this, num);
             }
         }
+        Action<Health, float> healthChangeAction = this.OnHealthChanged;
+        if (healthChangeAction != null)
+        {
+            healthChangeAction(this, num);
+        }
+
         return num;
     }
 
@@ -132,15 +140,20 @@ public class Health : NetworkBehaviour
         DamageReport damageReport = new DamageReport(damageInfo, num);
         this.currentHealth = Math.Max(this.currentHealth - num, 0f);
         this.lastHitTime = NetworkTime.time;
-        Action<Health, DamageReport> action = Health.onCharacterDamageServer;
+        Action<Health, DamageReport> action = Health.OnCharacterDamagedServer;
         if (action != null)
         {
             action(this, damageReport);
         }
+        Action<Health, float> healthChangeAction = this.OnHealthChanged;
+        if (healthChangeAction != null)
+        {
+            healthChangeAction(this, num);
+        }
 
         if (this.currentHealth == 0f)
         {
-            Action<Health, DamageReport> deathAction = Health.onCharacterDeathServer;
+            Action<Health, DamageReport> deathAction = Health.OnCharacterDeathServer;
             if (deathAction != null)
             {
                 deathAction(this, damageReport);
