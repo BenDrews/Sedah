@@ -63,6 +63,7 @@
     <Compile Include="Assets\Scripts\EntityStates\EntityStateMachine.cs" />
     <Compile Include="Assets\Scripts\Dungeons\Floor.cs" />
     <Compile Include="Assets\Scripts\Abilities\Bash.cs" />
+    <Compile Include="Assets\Scripts\NetworkingLobby\MatchMaker.cs" />
     <Compile Include="Assets\Scripts\NetworkManagerGame.cs" />
     <Compile Include="Assets\Scripts\PlayerCamera.cs" />
     <Compile Include="Assets\Scripts\Abilities\AbilityDataObject.cs" />
@@ -76,20 +77,19 @@
     <Compile Include="Assets\Scripts\Character\CharacterObject.cs" />
     <Compile Include="Assets\Scripts\Character\Character.cs" />
     <Compile Include="Assets\Scripts\Character\DamageReport.cs" />
+    <Compile Include="Assets\Scripts\NetworkingLobby\UIPlayer.cs" />
     <Compile Include="Assets\Scripts\Items\Item.cs" />
     <Compile Include="Assets\Scripts\Character\Stat.cs" />
     <Compile Include="Assets\Scripts\Items\ItemDatabase.cs" />
     <Compile Include="Assets\Scripts\Character\PlayerAbility.cs" />
     <Compile Include="Assets\Scripts\Character\Health.cs" />
     <Compile Include="Assets\Scripts\Character\Status.cs" />
-    <Compile Include="Assets\Scripts\Character\PlayerMovement.cs" />
-    <Compile Include="Assets\Scripts\EntityStates\EntityState.cs" />
-    <Compile Include="Assets\Scripts\Dungeons\Dungeon.cs" />
     <Compile Include="Assets\Scripts\NetworkingLobby\UILobby.cs" />
+    <Compile Include="Assets\Scripts\Character\PlayerMovement.cs" />
     <Compile Include="Assets\Scripts\NetworkingLobby\Player.cs" />
-    <Compile Include="Assets\Scripts\NetworkingLobby\MatchMaker.cs" />
+    <Compile Include="Assets\Scripts\EntityStates\EntityState.cs" />
     <Compile Include="Assets\Scripts\NetworkingLobby\AutoHostClient.cs" />
-    <Compile Include="Assets\Scripts\NetworkingLobby\UIPlayer.cs" />
+    <Compile Include="Assets\Scripts\Dungeons\Dungeon.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Mirror\Plugins\Mono.Cecil\Mono.CecilX.dll" />
