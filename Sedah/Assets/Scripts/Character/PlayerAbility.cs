@@ -10,13 +10,9 @@ public class PlayerAbility : NetworkBehaviour
 
     private void Start()
     {
-        if (NetworkClient.localPlayer.netId == base.netId)
+        if (isLocalPlayer)
         {
             this.character = base.GetComponent<CharacterObject>();
-        }
-        else
-        {
-            Destroy(this);
         }
 
     }

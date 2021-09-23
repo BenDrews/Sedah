@@ -19,7 +19,10 @@ namespace Sedah
             //{
             //    Destroy(this);
             //}
-            agent = GetComponent<NavMeshAgent>();
+            if (hasAuthority)
+            {
+                agent = GetComponent<NavMeshAgent>();
+            }
         }
 
         [Command]
@@ -41,13 +44,13 @@ namespace Sedah
                     LayerMask layerMask = LayerMask.GetMask("Terrain", "TargetableCharacters");
                     Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                     Debug.Log(ray);
+                    Debug.Log(layerMask);
                     if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
                     {
-                        Debug.Log(ray + "YES");
                         // TODO: Find a better way to represent the terrain layer
                         if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Terrain"))
                         {
-                            Debug.Log(ray + "YE3S");
+                            Debug.Log(hit.point);
                             CmdMove(hit.point);
                         }
                     }

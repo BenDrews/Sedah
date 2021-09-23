@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
+using UnityEngine.SceneManagement;
 
 namespace Sedah
 {
@@ -10,17 +11,6 @@ namespace Sedah
     // someone reconnects (both players would be on the same side).
     public class NetworkManagerGame : NetworkManager
     {
-        public Transform playerSpawn;
-
-        public override void OnServerAddPlayer(NetworkConnection conn)
-        {
-            // add player at correct spawn position
-            GameObject player = Instantiate(playerPrefab, playerSpawn.position, playerSpawn.rotation);
-
-            // Disable to main camera and enable the local player camera
-            NetworkServer.AddPlayerForConnection(conn, player);
-        }
-
         public override void OnServerDisconnect(NetworkConnection conn)
         {
             // call base functionality (actually destroys the player)

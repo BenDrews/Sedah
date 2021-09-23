@@ -43,10 +43,12 @@ public class PlayerAutoAttack : NetworkBehaviour
             }
         }
     }
-    public override void OnStartClient()
+    public void Start()
     {
-        base.OnStartClient();
-        this.character = GetComponent<CharacterObject>();
+        if (isLocalPlayer)
+        {
+            this.character = GetComponent<CharacterObject>();
+        }
     }
 
     // Update is called once per frame

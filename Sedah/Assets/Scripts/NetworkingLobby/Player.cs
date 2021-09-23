@@ -4,15 +4,16 @@ using Mirror;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using SedahNetworking;
+using Sedah;
+using UnityEngine.AI;
 
 [RequireComponent(typeof(NetworkMatch))]
 public class Player : NetworkBehaviour
 {
-
     public static Player localPlayer;
     [SyncVar] public string matchID;
     [SyncVar] public int playerIndex;
-
+    [SerializeField] GameObject playerSpawn;
     NetworkMatch networkMatch;
 
     [SyncVar] public Match currentMatch;
@@ -208,6 +209,10 @@ public class Player : NetworkBehaviour
 
     public void StartGame()
     { //Server
+
+        //SceneManager.LoadScene(2, LoadSceneMode.Additive);
+        //Scene scene = SceneManager.GetSceneByName("BenScene");
+        //StartCoroutine(WaitLoadServer(scene));
         TargetBeginGame();
     }
 
@@ -215,8 +220,54 @@ public class Player : NetworkBehaviour
     void TargetBeginGame()
     {
         Debug.Log($"MatchID: {matchID} | Beginning");
-        //Additively load game scene
         SceneManager.LoadScene(2, LoadSceneMode.Additive);
+        //Additively load game scene
+        Scene scene = SceneManager.GetSceneByName("BenScene");
+        StartCoroutine(WaitLoadClient(scene));
+        //CmdMoveObject();
+    }
+
+    [Command]
+    void CmdMoveObject(NetworkConnectionToClient conn = null)
+    {
+
+    }
+
+    IEnumerator WaitLoadServer(Scene scene)
+    {
+        yield return scene.isLoaded;
+        //SceneManager.MoveGameObjectToScene(this.gameObject, scene);
+        //GameObject.Find("Main Camera").SetActive(false);
+        SceneManager.SetActiveScene(scene);
+
+
+    }
+
+    [Command]
+    void CmdSpawn(NetworkConnectionToClient conn = null)
+    {
+        Debug.Log("Spawn");
+        GameObject spawn = Instantiate(playerSpawn);
+        //GameObject spawn2 = Instantiate(this.gameObject);
+        NetworkServer.Spawn(spawn, conn);
+    }
+    IEnumerator WaitLoadClient(Scene scene)
+    {
+        yield return scene.isLoaded;
+        GameObject.Find("Main Camera").SetActive(false);
+        SceneManager.SetActiveScene(scene);
+        CmdSpawn();
+        //Instantiate(this.gameObject);
+        //this.GetComponent<EntityStateMachine>().enabled = true;
+        //this.GetComponent<PlayerMovement>().enabled = true;
+        //this.GetComponent<Health>().enabled = true;
+        //this.GetComponent<CharacterObject>().enabled = true;
+        //this.GetComponent<Player>().enabled = true;
+        //this.GetComponent<PlayerCamera>().enabled = true;
+        //this.GetComponent<PlayerAutoAttack>().enabled = true;
+        //this.GetComponent<PlayerAbility>().enabled = true;
+        //this.GetComponent<NavMeshAgent>().enabled = true;
+        //this.GetComponent<MeshRenderer>().enabled = true;
     }
 
 }

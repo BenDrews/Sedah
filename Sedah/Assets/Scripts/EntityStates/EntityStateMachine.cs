@@ -8,9 +8,12 @@ public class EntityStateMachine : NetworkBehaviour
     protected EntityState state;
     protected EntityState nextState;
 
-    public void Awake()
+    public void Start()
     {
-        state = new IdlingState(this);
+        if (isServer)
+        {
+            state = new IdlingState(this);
+        }
     }
 
     public void SetNextState(EntityState state)

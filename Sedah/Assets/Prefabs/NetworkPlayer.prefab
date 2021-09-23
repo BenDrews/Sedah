@@ -80,6 +80,7 @@ MonoBehaviour:
   syncInterval: 0.1
   matchID: 
   playerIndex: 0
+  playerChar: {fileID: 1960080401273295257, guid: 4835d58590da6a642916613b0fbfc2d2, type: 3}
   currentMatch:
     matchID: 
     publicMatch: 0
