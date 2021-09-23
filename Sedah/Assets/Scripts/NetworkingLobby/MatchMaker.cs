@@ -47,6 +47,7 @@ namespace SedahNetworking
         void Start()
         {
             instance = this;
+            DontDestroyOnLoad(this.gameObject);
         }
 
         public bool HostGame(string _matchID, GameObject _player, bool publicMatch, out int playerIndex)
@@ -147,6 +148,7 @@ namespace SedahNetworking
                     break;
                 }
             }
+            NetworkManager.singleton.ServerChangeScene("BenScene");
         }
 
         public static string GetRandomMatchID()

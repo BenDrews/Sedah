@@ -281,7 +281,7 @@ PrefabInstance:
       propertyPath: m_Name
       value: Terrain
       objectReference: {fileID: 0}
-    - target: {fileID: 3481958079271899204, guid: e54656b7f69124d4395beb2ecce88710, type: 3}
+    - target: {fileID: 0}
       propertyPath: sceneId
       value: 2531150023
       objectReference: {fileID: 0}
@@ -412,7 +412,7 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4119449967606863927, guid: 84fa14c4cc34a4f419290445a078230e, type: 3}
+    - target: {fileID: 0}
       propertyPath: sceneId
       value: 2579654236
       objectReference: {fileID: 0}

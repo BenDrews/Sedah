@@ -23,6 +23,7 @@ namespace Sedah
             {
                 agent = GetComponent<NavMeshAgent>();
             }
+            Debug.Log(agent);
         }
 
         [Command]
@@ -38,7 +39,7 @@ namespace Sedah
         {
             if (hasAuthority)
             {
-                if (Input.GetMouseButtonDown(1))
+                if (Input.GetKeyDown(KeyCode.P))
                 {
                     RaycastHit hit;
                     LayerMask layerMask = LayerMask.GetMask("Terrain", "TargetableCharacters");

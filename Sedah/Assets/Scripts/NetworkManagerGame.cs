@@ -11,6 +11,10 @@ namespace Sedah
     // someone reconnects (both players would be on the same side).
     public class NetworkManagerGame : NetworkManager
     {
+        public override void OnServerSceneChanged(string aceneName)
+        {
+
+        }
         public override void OnServerDisconnect(NetworkConnection conn)
         {
             // call base functionality (actually destroys the player)

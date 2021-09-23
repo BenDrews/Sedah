@@ -29,6 +29,7 @@ public class Player : NetworkBehaviour
     {
         if (isLocalPlayer)
         {
+            DontDestroyOnLoad(this.gameObject);
             localPlayer = this;
         }
         else
@@ -36,6 +37,12 @@ public class Player : NetworkBehaviour
             Debug.Log($"Spawning other player UI Prefab");
             playerLobbyUI = UILobby.instance.SpawnPlayerUIPrefab(this);
         }
+    }
+
+    public override void OnStartServer()
+    {
+        base.OnStartServer();
+        DontDestroyOnLoad(this.gameObject);
     }
 
     public override void OnStopClient()
@@ -210,9 +217,6 @@ public class Player : NetworkBehaviour
     public void StartGame()
     { //Server
 
-        //SceneManager.LoadScene(2, LoadSceneMode.Additive);
-        //Scene scene = SceneManager.GetSceneByName("BenScene");
-        //StartCoroutine(WaitLoadServer(scene));
         TargetBeginGame();
     }
 
@@ -220,11 +224,12 @@ public class Player : NetworkBehaviour
     void TargetBeginGame()
     {
         Debug.Log($"MatchID: {matchID} | Beginning");
-        SceneManager.LoadScene(2, LoadSceneMode.Additive);
+        //SceneManager.LoadScene(2, LoadSceneMode.Additive);
         //Additively load game scene
-        Scene scene = SceneManager.GetSceneByName("BenScene");
-        StartCoroutine(WaitLoadClient(scene));
+        //Scene scene = SceneManager.GetSceneByName("BenScene");
+        //StartCoroutine(WaitLoadClient(scene));
         //CmdMoveObject();
+        CmdSpawn();
     }
 
     [Command]
