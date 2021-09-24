@@ -30,6 +30,14 @@ public class Health : NetworkBehaviour
         }
     }
 
+    public float currentHealthPercent
+    {
+        get
+        {
+            return this.currentHealth / this.maxHealth;
+        }
+    }
+
     public float missingHealth
     {
         get
