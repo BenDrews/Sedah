@@ -10,15 +10,17 @@ public class PlayerAbility : NetworkBehaviour
 
     private void Start()
     {
-        if (NetworkClient.localPlayer.netId == base.netId)
+        if (isLocalPlayer)
         {
             this.character = base.GetComponent<CharacterObject>();
         }
-        else
-        {
-            Destroy(this);
-        }
 
+    }
+
+    public override void OnStartServer()
+    {
+        base.OnStartServer();
+        this.character = base.GetComponent<CharacterObject>();
     }
 
     // Update is called once per frame

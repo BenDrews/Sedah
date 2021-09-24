@@ -43,9 +43,17 @@ public class PlayerAutoAttack : NetworkBehaviour
             }
         }
     }
-    public override void OnStartClient()
+    public void Start()
     {
-        base.OnStartClient();
+        if (isLocalPlayer)
+        {
+            this.character = GetComponent<CharacterObject>();
+        }
+    }
+
+    public override void OnStartServer()
+    {
+        base.OnStartServer();
         this.character = GetComponent<CharacterObject>();
     }
 

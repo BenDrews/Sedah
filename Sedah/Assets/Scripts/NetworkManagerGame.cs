@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
+using UnityEngine.SceneManagement;
+using UnityEngine.AI;
 
 namespace Sedah
 {
@@ -10,21 +12,43 @@ namespace Sedah
     // someone reconnects (both players would be on the same side).
     public class NetworkManagerGame : NetworkManager
     {
-        public Transform playerSpawn;
-
-        public override void OnServerAddPlayer(NetworkConnection conn)
+        [SerializeField] GameObject camera;
+        public override void OnServerSceneChanged(string aceneName)
         {
-            // add player at correct spawn position
-            GameObject player = Instantiate(playerPrefab, playerSpawn.position, playerSpawn.rotation);
-
-            // Disable to main camera and enable the local player camera
-            NetworkServer.AddPlayerForConnection(conn, player);
+            GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+            for (int i = 0; i < players.Length; i++)
+            {
+                ValidateComponents(players[i]);
+            }
         }
 
+        public override void OnClientSceneChanged(NetworkConnection conn)
+        {
+            base.OnClientSceneChanged(conn);
+            Scene scene = SceneManager.GetActiveScene();
+            if (scene.name == "BenScene")
+            {
+                GameObject playerCamTarget = Camera.Instantiate(camera);
+            }
+        }
         public override void OnServerDisconnect(NetworkConnection conn)
         {
             // call base functionality (actually destroys the player)
             base.OnServerDisconnect(conn);
+        }
+
+        private void ValidateComponents(GameObject player)
+        {
+            player.GetComponent<EntityStateMachine>().enabled = true;
+            player.GetComponent<NavMeshAgent>().enabled = true;
+            player.GetComponent<PlayerAbility>().enabled = true;
+            player.GetComponent<MeshRenderer>().enabled = true;
+            player.GetComponent<CapsuleCollider>().enabled = true;
+            player.GetComponent<PlayerMovement>().enabled = true;
+            player.GetComponent<Health>().enabled = true;
+            player.GetComponent<CharacterObject>().enabled = true;
+            player.GetComponent<Player>().enabled = true;
+            player.GetComponent<PlayerAutoAttack>().enabled = true;
         }
     }
 }

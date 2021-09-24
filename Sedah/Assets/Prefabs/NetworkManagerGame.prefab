@@ -61,9 +61,13 @@ MonoBehaviour:
   playerPrefab: {fileID: 1960080401273295257, guid: 4835d58590da6a642916613b0fbfc2d2, type: 3}
   autoCreatePlayer: 1
   playerSpawnMethod: 1
-  spawnPrefabs: []
-  playerSpawn: {fileID: 0}
-  localPlayerCameraTargetPrefab: {fileID: 8261618997686455734, guid: 38f71aff9d91ad641afbe2b397f1c4eb, type: 3}
+  spawnPrefabs:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!114 &1523619278308752374
 MonoBehaviour:
   m_ObjectHideFlags: 0

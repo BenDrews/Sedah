@@ -9,11 +9,15 @@ public class PlayerCamera : NetworkBehaviour
     [SerializeField]
     private GameObject localPlayerCameraTargetPrefab;
     // Start is called before the first frame update
-    public override void OnStartClient()
+    public void Start()
     {
-
-        base.OnStartClient();
-        GameObject playerCamTarget = GameObject.Instantiate(localPlayerCameraTargetPrefab);
+        Debug.Log("HASCAMERA");
+        if (hasAuthority)
+        {
+            Debug.Log("HASCAMERA2");
+            GameObject playerCamTarget = Camera.Instantiate(localPlayerCameraTargetPrefab);
+            
+        }
     }
 
     // Update is called once per frame

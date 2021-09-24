@@ -4,15 +4,16 @@ using Mirror;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using SedahNetworking;
+using Sedah;
+using UnityEngine.AI;
 
 [RequireComponent(typeof(NetworkMatch))]
 public class Player : NetworkBehaviour
 {
-
     public static Player localPlayer;
     [SyncVar] public string matchID;
     [SyncVar] public int playerIndex;
-
+    [SerializeField] GameObject playerSpawn;
     NetworkMatch networkMatch;
 
     [SyncVar] public Match currentMatch;
@@ -26,6 +27,7 @@ public class Player : NetworkBehaviour
 
     public override void OnStartClient()
     {
+        DontDestroyOnLoad(this.gameObject);
         if (isLocalPlayer)
         {
             localPlayer = this;
@@ -35,6 +37,12 @@ public class Player : NetworkBehaviour
             Debug.Log($"Spawning other player UI Prefab");
             playerLobbyUI = UILobby.instance.SpawnPlayerUIPrefab(this);
         }
+    }
+
+    public override void OnStartServer()
+    {
+        base.OnStartServer();
+        DontDestroyOnLoad(this.gameObject);
     }
 
     public override void OnStopClient()
@@ -208,6 +216,7 @@ public class Player : NetworkBehaviour
 
     public void StartGame()
     { //Server
+
         TargetBeginGame();
     }
 
@@ -215,8 +224,24 @@ public class Player : NetworkBehaviour
     void TargetBeginGame()
     {
         Debug.Log($"MatchID: {matchID} | Beginning");
-        //Additively load game scene
-        SceneManager.LoadScene(2, LoadSceneMode.Additive);
+        Scene scene = SceneManager.GetSceneByName("BenScene");
+        StartCoroutine(WaitLoadClient(scene));
+    }
+
+    IEnumerator WaitLoadClient(Scene scene)
+    {
+        yield return scene.isLoaded;
+        this.GetComponent<EntityStateMachine>().enabled = true;
+        this.GetComponent<NavMeshAgent>().enabled = true;
+        this.GetComponent<MeshRenderer>().enabled = true;
+        this.GetComponent<CapsuleCollider>().enabled = true;
+        this.GetComponent<Health>().enabled = true;
+        this.GetComponent<CharacterObject>().enabled = true;
+        this.GetComponent<Player>().enabled = true;
+        //this.GetComponent<PlayerCamera>().enabled = true;
+        this.GetComponent<PlayerAutoAttack>().enabled = true;
+        this.GetComponent<PlayerAbility>().enabled = true;
+        this.GetComponent<PlayerMovement>().enabled = true;
     }
 
 }
