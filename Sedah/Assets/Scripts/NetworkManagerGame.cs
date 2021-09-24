@@ -18,17 +18,7 @@ namespace Sedah
             GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
             for (int i = 0; i < players.Length; i++)
             {
-                players[i].GetComponent<EntityStateMachine>().enabled = true;
-                players[i].GetComponent<NavMeshAgent>().enabled = true;
-                players[i].GetComponent<PlayerAbility>().enabled = true;
-                players[i].GetComponent<MeshRenderer>().enabled = true;
-                players[i].GetComponent<CapsuleCollider>().enabled = true;
-                players[i].GetComponent<PlayerMovement>().enabled = true;
-                players[i].GetComponent<Health>().enabled = true;
-                players[i].GetComponent<CharacterObject>().enabled = true;
-                players[i].GetComponent<Player>().enabled = true;
-                players[i].GetComponent<PlayerAutoAttack>().enabled = true;
-
+                ValidateComponents(players[i]);
             }
         }
 
@@ -36,26 +26,8 @@ namespace Sedah
         {
             base.OnClientSceneChanged(conn);
             Scene scene = SceneManager.GetActiveScene();
-            //GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-            //for (int i = 0; i < players.Length; i++)
-            //{
-            //    this.GetComponent<EntityStateMachine>().enabled = true;
-            //    this.GetComponent<NavMeshAgent>().enabled = true;
-            //    this.GetComponent<PlayerAbility>().enabled = true;
-            //    this.GetComponent<MeshRenderer>().enabled = true;
-            //    this.GetComponent<CapsuleCollider>().enabled = true;
-            //    this.GetComponent<PlayerMovement>().enabled = true;
-            //    this.GetComponent<Health>().enabled = true;
-            //    this.GetComponent<CharacterObject>().enabled = true;
-            //    this.GetComponent<Player>().enabled = true;
-            //    //this.GetComponent<PlayerCamera>().enabled = true;
-            //    this.GetComponent<PlayerAutoAttack>().enabled = true;
-
-            //}
             if (scene.name == "BenScene")
             {
-                Debug.Log("GYA");
-
                 GameObject playerCamTarget = Camera.Instantiate(camera);
             }
         }
@@ -63,6 +35,20 @@ namespace Sedah
         {
             // call base functionality (actually destroys the player)
             base.OnServerDisconnect(conn);
+        }
+
+        private void ValidateComponents(GameObject player)
+        {
+            player.GetComponent<EntityStateMachine>().enabled = true;
+            player.GetComponent<NavMeshAgent>().enabled = true;
+            player.GetComponent<PlayerAbility>().enabled = true;
+            player.GetComponent<MeshRenderer>().enabled = true;
+            player.GetComponent<CapsuleCollider>().enabled = true;
+            player.GetComponent<PlayerMovement>().enabled = true;
+            player.GetComponent<Health>().enabled = true;
+            player.GetComponent<CharacterObject>().enabled = true;
+            player.GetComponent<Player>().enabled = true;
+            player.GetComponent<PlayerAutoAttack>().enabled = true;
         }
     }
 }

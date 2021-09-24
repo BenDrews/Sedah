@@ -12,13 +12,6 @@ namespace Sedah
         private NavMeshAgent agent;
 
         public float movementSpeed = 30;
-        private void Start()
-        {
-            if (isLocalPlayer)
-            {
-                agent = GetComponent<NavMeshAgent>();
-            }
-        }
 
         public override void OnStartServer()
         {
