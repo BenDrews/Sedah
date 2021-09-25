@@ -26,9 +26,16 @@ namespace Sedah
         {
             base.OnClientSceneChanged(conn);
             Scene scene = SceneManager.GetActiveScene();
-            if (scene.name == "BenScene")
+            if (scene.name != "Lobby" && scene.name != "Offline")
             {
                 GameObject playerCamTarget = Camera.Instantiate(camera);
+                ValidateComponents(Player.localPlayer.gameObject);
+                GameObject uiScreen = GameObject.FindGameObjectWithTag("UIScreen");
+                if (uiScreen != null)
+                {
+                    Player.localPlayer.GetComponent<PlayerToggleScreen>().SetCanvas(uiScreen.GetComponent<Canvas>());
+                    uiScreen.GetComponent<Canvas>().worldCamera = playerCamTarget.GetComponent<Camera>();
+                }
             }
         }
         public override void OnServerDisconnect(NetworkConnection conn)
@@ -49,6 +56,7 @@ namespace Sedah
             player.GetComponent<CharacterObject>().enabled = true;
             player.GetComponent<Player>().enabled = true;
             player.GetComponent<PlayerAutoAttack>().enabled = true;
+            player.GetComponent<PlayerToggleScreen>().enabled = true;
         }
     }
 }
