@@ -14,7 +14,7 @@ namespace Sedah
     {
         private NavMeshAgent agent;
         private EntityStateMachine stateMachine;
-        public float movementSpeed;
+        private float movementSpeed;
 
         public override void OnStartServer()
         {

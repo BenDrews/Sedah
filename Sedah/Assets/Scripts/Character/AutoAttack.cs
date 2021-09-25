@@ -25,7 +25,7 @@ public abstract class AutoAttack : NetworkBehaviour
     {
         EntityStateMachine stateMachine = GetComponent<EntityStateMachine>();
         float attackSpeed = character.GetStatValue(StatType.AttackSpeed);
-        double timeForNextAttack = double.IsNegativeInfinity(timeLastAttacked) ? double.NegativeInfinity : NetworkTime.time + (1.0 / attackSpeed);
+        double timeForNextAttack = double.IsNegativeInfinity(timeLastAttacked) ? double.NegativeInfinity : timeLastAttacked + (1.0 / attackSpeed);
         if (stateMachine.GetState().type == EntityStateType.AutoAttacking)
         {
             // Check if target is in range
