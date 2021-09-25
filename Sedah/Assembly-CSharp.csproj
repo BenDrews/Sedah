@@ -91,6 +91,7 @@
     <Compile Include="Assets\Scripts\EntityStates\EntityState.cs" />
     <Compile Include="Assets\Scripts\NetworkingLobby\AutoHostClient.cs" />
     <Compile Include="Assets\Scripts\Dungeons\Dungeon.cs" />
+    <Compile Include="Assets\Scripts\Character\AutoAttack.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Mirror\Plugins\Mono.Cecil\Mono.CecilX.dll" />
