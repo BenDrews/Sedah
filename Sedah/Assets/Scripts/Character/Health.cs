@@ -12,7 +12,6 @@ public class Health : NetworkBehaviour
     public float currentHealth;
     private CharacterObject character;
     public double lastHitTime;
-    private bool healthReady = false;
 
     public bool alive
     {
@@ -175,24 +174,14 @@ public class Health : NetworkBehaviour
     // Start is called before the first frame update
     public void Start()
     {
-
+        this.character = this.GetComponent<CharacterObject>();
+        this.currentHealth = this.maxHealth;
+        this.lastHitTime = float.NegativeInfinity;
     }
-
-    public void SetHealth()
-    {
-        if (isServer)
-        {
-            this.character = this.GetComponent<CharacterObject>();
-            this.currentHealth = this.maxHealth;
-            this.lastHitTime = float.NegativeInfinity;
-            healthReady = true;
-        }
-    }
-
 
     public void FixedUpdate()
     {
-        if (isServer && healthReady)
+        if (isServer)
         {
             // TODO: Change this to do a heal per status so that healer can be properly attributed. Also the same for DoT
             float healingOverTime = this.character.GetTotalStatusValue(StatusType.HealingOverTime);
