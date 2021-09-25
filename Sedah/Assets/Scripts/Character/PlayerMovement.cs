@@ -6,9 +6,6 @@ using Mirror;
 
 namespace Sedah
 {
-    [RequireComponent(typeof(NavMeshAgent))]
-    [RequireComponent(typeof(CharacterObject))]
-    [RequireComponent(typeof(EntityStateMachine))]
     public class PlayerMovement : Movement
     {
         public new void Update()

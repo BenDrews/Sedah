@@ -5,11 +5,12 @@ using UnityEngine;
 using System.Linq;
 using Mirror;
 
+[RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(EntityStateMachine))]
 public class CharacterObject : NetworkBehaviour
 {
     [SerializeField] private AbilityDatabase abilityDatabase;
-    [SerializeField] private Character character;
+    [SerializeField] private Character character;    
 
     //Stats for the PlayerCharacter
     private Dictionary<StatType, Stat> characterStats = new Dictionary<StatType, Stat>();
@@ -22,6 +23,7 @@ public class CharacterObject : NetworkBehaviour
     private int level = 1;
     private bool finishedLoading = false;
     private EntityStateMachine stateMachine;
+    private Animator animator;
 
     public void Awake()
     {
@@ -46,6 +48,7 @@ public class CharacterObject : NetworkBehaviour
             NetworkServer.Spawn(obj);
             abilities.Add(obj);
         }
+        animator = GetComponent<Animator>();
         finishedLoading = true;
     }
 

@@ -9,17 +9,20 @@ namespace Sedah
 {
     [RequireComponent(typeof(NavMeshAgent))]
     [RequireComponent(typeof(CharacterObject))]
-    [RequireComponent(typeof(EntityStateMachine))]
     public class Movement : NetworkBehaviour
     {
         private NavMeshAgent agent;
         private EntityStateMachine stateMachine;
+        private Animator animator;
+        private Vector3 destination;
         private float movementSpeed;
+        private float rotationSpeed = 30;
 
         public override void OnStartServer()
         {
             agent = GetComponent<NavMeshAgent>();
             stateMachine = GetComponent<EntityStateMachine>();
+            animator = GetComponent<Animator>();
             movementSpeed = GetComponent<CharacterObject>().GetStatValue(StatType.MoveSpeed);
             base.OnStartServer();
         }
@@ -27,15 +30,20 @@ namespace Sedah
         [Command]
         public void CmdMove(Vector3 pos)
         {
-            agent.SetDestination(pos);
+            destination = pos;
+            agent.SetDestination(destination);
+            agent.isStopped = false;
+            animator.SetBool("Moving", true);
         }
 
         [Command]
         public void CmdSetMoveState(Vector3 pos)
         {
-            EntityStateMachine stateMachine = GetComponent<EntityStateMachine>();
-            stateMachine.SetNextState(new MovingState(stateMachine));
-            agent.SetDestination(pos);
+            destination = pos;
+            stateMachine.SetNextState(new MovingState(stateMachine));            
+            agent.SetDestination(destination);
+            agent.isStopped = false;
+            animator.SetBool("Moving", true);
         }
 
         public void Update()
@@ -44,14 +52,18 @@ namespace Sedah
             {
                 if (stateMachine.GetState().type == EntityStateType.Moving)
                 {
-                    if (agent.isStopped)
-                    {
+                    Vector3 currentPos = transform.position;
+                    currentPos.y = 0;
+                    if (Vector3.Distance(currentPos, destination) < 0.01f) {
+                        agent.isStopped = true;
                         stateMachine.SetNextState(new IdlingState(stateMachine));
+                        animator.SetBool("Moving", false);
                     }
-                    else if (agent.speed != movementSpeed)
-                    {
-                        agent.speed = movementSpeed;
-                    }
+                    agent.speed = movementSpeed;
+                    Vector3 dir = destination - transform.position;
+                    dir.y = 0;
+                    Quaternion rot = Quaternion.LookRotation(dir);
+                    transform.rotation = Quaternion.Lerp(transform.rotation, rot, rotationSpeed * Time.deltaTime);
                 }
             }
         }

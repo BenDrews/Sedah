@@ -226,6 +226,7 @@ MonoBehaviour:
   playerSpawnMethod: 0
   spawnPrefabs:
   - {fileID: 3382352063740128489, guid: 38f22021b24551a449399d1086a129d4, type: 3}
+  camera: {fileID: 0}
 --- !u!1001 &1651639140653440663
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -280,10 +281,6 @@ PrefabInstance:
     - target: {fileID: 1651639140198892478, guid: e54656b7f69124d4395beb2ecce88710, type: 3}
       propertyPath: m_Name
       value: Terrain
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: sceneId
-      value: 2531150023
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e54656b7f69124d4395beb2ecce88710, type: 3}
@@ -412,10 +409,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 0}
-      propertyPath: sceneId
-      value: 2579654236
-      objectReference: {fileID: 0}
     - target: {fileID: 7439534512859533780, guid: 84fa14c4cc34a4f419290445a078230e, type: 3}
       propertyPath: m_Name
       value: PlayerSpawn
