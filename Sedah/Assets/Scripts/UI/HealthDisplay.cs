@@ -19,6 +19,7 @@ public class HealthDisplay : MonoBehaviour
 
     private void LateUpdate()
     {
+        //TODO: Thid doesn't work rn because the player camera isn't the main camera
         transform.LookAt(transform.position + Camera.main.transform.forward);
     }
 

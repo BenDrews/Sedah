@@ -224,24 +224,5 @@ public class Player : NetworkBehaviour
     void TargetBeginGame()
     {
         Debug.Log($"MatchID: {matchID} | Beginning");
-        Scene scene = SceneManager.GetSceneByName("BenScene");
-        StartCoroutine(WaitLoadClient(scene));
     }
-
-    IEnumerator WaitLoadClient(Scene scene)
-    {
-        yield return scene.isLoaded;
-        this.GetComponent<EntityStateMachine>().enabled = true;
-        this.GetComponent<NavMeshAgent>().enabled = true;
-        this.GetComponent<MeshRenderer>().enabled = true;
-        this.GetComponent<CapsuleCollider>().enabled = true;
-        this.GetComponent<Health>().enabled = true;
-        this.GetComponent<CharacterObject>().enabled = true;
-        this.GetComponent<Player>().enabled = true;
-        //this.GetComponent<PlayerCamera>().enabled = true;
-        this.GetComponent<PlayerAutoAttack>().enabled = true;
-        this.GetComponent<PlayerAbility>().enabled = true;
-        this.GetComponent<PlayerMovement>().enabled = true;
-    }
-
 }

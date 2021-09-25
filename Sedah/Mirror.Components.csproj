@@ -58,8 +58,8 @@
     <Compile Include="Assets\Mirror\Components\NetworkLobbyPlayer.cs" />
     <Compile Include="Assets\Mirror\Components\NetworkTransform2k\NetworkTransformBase.cs" />
     <Compile Include="Assets\Mirror\Components\Experimental\NetworkTransformChild.cs" />
-    <Compile Include="Assets\Mirror\Components\InterestManagement\SpatialHashing\Grid2D.cs" />
     <Compile Include="Assets\Mirror\Components\Discovery\NetworkDiscoveryBase.cs" />
+    <Compile Include="Assets\Mirror\Components\InterestManagement\SpatialHashing\Grid2D.cs" />
     <Compile Include="Assets\Mirror\Components\NetworkOwnerChecker.cs" />
     <Compile Include="Assets\Mirror\Components\NetworkMatch.cs" />
     <Compile Include="Assets\Mirror\Components\Discovery\ServerRequest.cs" />
