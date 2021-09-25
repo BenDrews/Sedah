@@ -21,7 +21,7 @@ MonoBehaviour:
   manaPerLvl: 0
   attackDamage: 50
   adPerLvl: 1
-  attackSpeed: 0
+  attackSpeed: 1
   asPerLvl: 0
   attackRange: 10
   moveSpeed: 0

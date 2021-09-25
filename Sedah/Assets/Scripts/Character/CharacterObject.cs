@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -22,43 +23,39 @@ public class CharacterObject : NetworkBehaviour
     private bool finishedLoading = false;
     private EntityStateMachine stateMachine;
 
+    public void Awake()
+    {
+        Debug.Log("STATS LOADED");
+        characterStats.Add(StatType.Health, new Stat(character.Health, character.HealthPerLvl, StatType.Health));
+        characterStats.Add(StatType.Mana, new Stat(character.Mana, character.ManaPerLvl, StatType.Mana));
+        characterStats.Add(StatType.AttackDamage, new Stat(character.AttackDamage, character.ADPerLvl, StatType.AttackDamage));
+        characterStats.Add(StatType.AbilityPower, new Stat(0, 0, StatType.Health));
+        characterStats.Add(StatType.AttackSpeed, new Stat(character.AttackSpeed, character.ASPerLvl, StatType.Health));
+        characterStats.Add(StatType.MoveSpeed, new Stat(character.MoveSpeed, 0, StatType.MoveSpeed));
+        characterStats.Add(StatType.CDR, new Stat(0, 0, StatType.CDR));
+        characterStats.Add(StatType.Armor, new Stat(character.Armor, character.ArmorPerLvl, StatType.Armor));
+        characterStats.Add(StatType.MagicRes, new Stat(character.MagicRes, character.MRPerLvl, StatType.MagicRes));
+        characterStats.Add(StatType.ArmPen, new Stat(0, 0, StatType.ArmPen));
+        characterStats.Add(StatType.MagicPen, new Stat(0, 0, StatType.MagicPen));
+        characterStats.Add(StatType.AttackRange, new Stat(character.AttackRange, 0, StatType.AttackRange));
+
+        List<int> abilityIds = character.GetAbilities();
+        foreach (int a in abilityIds)
+        {
+            GameObject obj = Instantiate(abilityDatabase.GetAbility(a), transform);
+            NetworkServer.Spawn(obj);
+            abilities.Add(obj);
+        }
+        finishedLoading = true;
+    }
+
     public void Start()
     {
         if (isServer)
         {
-            Debug.Log("STATS LOADED");
-            characterStats.Add(StatType.Health, new Stat(character.Health, character.HealthPerLvl, StatType.Health));
-            characterStats.Add(StatType.Mana, new Stat(character.Mana, character.ManaPerLvl, StatType.Mana));
-            characterStats.Add(StatType.AttackDamage, new Stat(character.AttackDamage, character.ADPerLvl, StatType.AttackDamage));
-            characterStats.Add(StatType.AbilityPower, new Stat(0, 0, StatType.Health));
-            characterStats.Add(StatType.AttackSpeed, new Stat(character.AttackSpeed, character.ASPerLvl, StatType.Health));
-            characterStats.Add(StatType.MoveSpeed, new Stat(character.MoveSpeed, 0, StatType.MoveSpeed));
-            characterStats.Add(StatType.CDR, new Stat(0, 0, StatType.CDR));
-            characterStats.Add(StatType.Armor, new Stat(character.Armor, character.ArmorPerLvl, StatType.Armor));
-            characterStats.Add(StatType.MagicRes, new Stat(character.MagicRes, character.MRPerLvl, StatType.MagicRes));
-            characterStats.Add(StatType.ArmPen, new Stat(0, 0, StatType.ArmPen));
-            characterStats.Add(StatType.MagicPen, new Stat(0, 0, StatType.MagicPen));
-            characterStats.Add(StatType.AttackRange, new Stat(character.AttackRange, 0, StatType.AttackRange));
-
-            List<int> abilityIds = character.GetAbilities();
-            foreach (int a in abilityIds)
-            {
-                GameObject obj = Instantiate(abilityDatabase.GetAbility(a), transform);
-                NetworkServer.Spawn(obj);
-                abilities.Add(obj);
-            }
-
             stateMachine = GetComponent<EntityStateMachine>();
             stateMachine.SetNextState(new IdlingState(stateMachine));
-            finishedLoading = true;
-            GetComponent<Health>().SetHealth();
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     public CharacterObject()
