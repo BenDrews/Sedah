@@ -5,53 +5,55 @@ using UnityEngine;
 using Mirror;
 
 [System.Serializable]
-public abstract class Ability: NetworkBehaviour
+public abstract class Ability : NetworkBehaviour
 {
-    [SerializeField] protected int ID;
-    [SerializeField] protected Sprite Sprite; // Drag & drop the sprite. It does not need to be in the `Resources` folder
-    [SerializeField, Range(0, 999)] protected int Cost = 0;
-    [SerializeField, Range(0, 999)] protected int Damage = 0;
-    [SerializeField] protected string Target = "";
-    [SerializeField] protected string Effect = "";
-    [SerializeField] protected int CooldownTime = 0;
-    [SerializeField] protected bool OnCooldown = false;
-    [SerializeField] protected Coroutine RunCd;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    public IEnumerator RunCooldown()
-    {
-        OnCooldown = true;
-        yield return new WaitForSeconds(CooldownTime);
-        OnCooldown = false;
-    }
-
-    public abstract void Activate(GameObject gameObject1 = null, GameObject gameObject2 = null);
-
-
-    public bool IsOnCooldown()
-    {
-        return OnCooldown;
-    }
+    [SerializeField] protected int id;
+    [SerializeField] protected Sprite sprite; // Drag & drop the sprite. It does not need to be in the `Resources` folder
+    [SerializeField, Range(0, 999)] protected int cost = 0;
+    [SerializeField, Range(0, 999)] protected int damage = 0;
+    [SerializeField] protected float range = 0;
+    [SerializeField] protected string target = "";
+    [SerializeField] protected int cooldownTime = 0;
+    [SerializeField] protected bool onCooldown = false;
 
     public int GetCost()
     {
-        return Cost;
+        return cost;
+    }
+
+    public bool OnCooldown()
+    {
+        return onCooldown;
     }
 
     public void SetCooldown(bool cd)
     {
-        OnCooldown = cd;
+        onCooldown = cd;
     }
 
+    public int GetCooldown()
+    {
+        return cooldownTime;
+    }
+
+    public float GetRange()
+    {
+        return range;
+    }
+
+    public string GetTarget()
+    {
+        return target;
+    }
+
+    
+    public virtual void Activate(GameObject characterObject, GameObject gameObject2)
+    {
+
+    }
+
+    public virtual void Activate(GameObject characterObject, RaycastHit hit)
+    {
+
+    }
 }

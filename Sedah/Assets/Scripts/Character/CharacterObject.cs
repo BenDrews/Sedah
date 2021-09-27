@@ -119,9 +119,13 @@ public class CharacterObject : NetworkBehaviour
         statusEffects[status.StatusType].Add(status);
     }
 
-    public GameObject GetAbility(int i)
+    public Ability GetAbility(int i)
     {
-        return abilities[i];
+        if (abilities.Count() <= i)
+        {
+            return null;
+        }
+        return abilities[i].GetComponent<Ability>();
     }
 
     public void AddAbility(int i)

@@ -6,5 +6,6 @@ public enum EntityStateType
 {
     AutoAttacking,
     Moving,
-    Idling
+    Idling,
+    AbilityCast
 }
