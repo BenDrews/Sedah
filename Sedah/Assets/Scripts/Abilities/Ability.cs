@@ -52,7 +52,7 @@ public abstract class Ability : NetworkBehaviour
 
     }
 
-    public virtual void Activate(GameObject characterObject, RaycastHit hit)
+    public virtual void Activate(GameObject characterObject, Vector3 point)
     {
 
     }

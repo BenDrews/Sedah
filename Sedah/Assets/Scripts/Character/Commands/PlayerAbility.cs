@@ -87,7 +87,7 @@ public class PlayerAbility : AbilityCast
                         float dist = Vector3.Distance(transform.position, hit.point);
                         if (dist <= ability.GetRange())
                         {
-                            CmdSetAbilityCastStateHit(hit, i);
+                            CmdSetAbilityCastStateHit(hit.point, i);
                         }
                     }
                 }

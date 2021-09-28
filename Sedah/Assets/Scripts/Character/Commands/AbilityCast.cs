@@ -17,7 +17,7 @@ public abstract class AbilityCast : NetworkBehaviour
     public bool isTarget = false;
 
     public GameObject target;
-    public RaycastHit targetHit;
+    public Vector3 point;
 
     Coroutine runCd;
 
@@ -32,11 +32,11 @@ public abstract class AbilityCast : NetworkBehaviour
     }
 
     [Command]
-    protected void CmdSetAbilityCastStateHit(RaycastHit hit, int index)
+    protected void CmdSetAbilityCastStateHit(Vector3 point, int index)
     {
         EntityStateMachine stateMachine = GetComponent<EntityStateMachine>();
         stateMachine.SetNextState(new CastingState(stateMachine));
-        this.targetHit = hit;
+        this.point = point;
         this.index = index;
         isTarget = false;
     }
@@ -64,7 +64,7 @@ public abstract class AbilityCast : NetworkBehaviour
         }
     }
 
-    protected void AttemptAbilityCast(RaycastHit hit)
+    protected void AttemptAbilityCast(Vector3 point)
     {
         EntityStateMachine stateMachine = GetComponent<EntityStateMachine>();
 
@@ -77,12 +77,12 @@ public abstract class AbilityCast : NetworkBehaviour
             {
                 // Stop moving if target is in range
                 this.GetComponent<PlayerMovement>()?.CmdMove(transform.position);
-                FireAbilityCast(hit);
+                FireAbilityCast(point);
             }
             else
             {
                 //TODO" Get the player to move in range of ability cast
-                //this.GetComponent<PlayerMovement>()?.CmdMove(target.transform.position);
+                //this.GetComponent<MobMovement>()?.Move(target.transform.position);
             }
         }
     }
@@ -103,10 +103,10 @@ public abstract class AbilityCast : NetworkBehaviour
     }
 
     // Ability affects area/point.
-    protected void FireAbilityCast(RaycastHit hit)
+    protected void FireAbilityCast(Vector3 point)
     {
         Ability ability = character.GetAbility(index);
-        ability.Activate(character.gameObject, hit);
+        ability.Activate(character.gameObject, point);
         runCd = StartCoroutine(RunCooldown(ability, ability.GetCooldown() * (1 - character.GetStatValue(StatType.CDR)/100)));
     }
 
@@ -129,7 +129,7 @@ public abstract class AbilityCast : NetworkBehaviour
                 }
                 else
                 {
-                    AttemptAbilityCast(targetHit);
+                    AttemptAbilityCast(point);
                 }
             }
         }

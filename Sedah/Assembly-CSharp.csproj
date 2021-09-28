@@ -64,7 +64,7 @@
     <Compile Include="Assets\Scripts\Character\Commands\AutoAttack.cs" />
     <Compile Include="Assets\Scripts\Mob\Mob.cs" />
     <Compile Include="Assets\Scripts\EntityStates\EntityStateMachine.cs" />
-    <Compile Include="Assets\Scripts\Character\AbilityCast.cs" />
+    <Compile Include="Assets\Scripts\Character\Commands\AbilityCast.cs" />
     <Compile Include="Assets\Scripts\LevelManagement\Floor.cs" />
     <Compile Include="Assets\Scripts\Abilities\Bash.cs" />
     <Compile Include="Assets\Scripts\NetworkingLobby\MatchMaker.cs" />
@@ -98,6 +98,12 @@
     <Compile Include="Assets\Scripts\EntityStates\EntityState.cs" />
     <Compile Include="Assets\Scripts\NetworkingLobby\AutoHostClient.cs" />
     <Compile Include="Assets\Scripts\LevelManagement\Dungeon.cs" />
+    <Compile Include="Assets\Scripts\Mob\ServerAutoAttack.cs" />
+    <Compile Include="Assets\Scripts\Mob\MobAutoAttack.cs" />
+    <Compile Include="Assets\Scripts\Mob\ServerAbilityCast.cs" />
+    <Compile Include="Assets\Scripts\Mob\MobAbilityCast.cs" />
+    <Compile Include="Assets\Scripts\Mob\ServerMovement.cs" />
+    <Compile Include="Assets\Scripts\Mob\MobMovement.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Mirror\Plugins\Mono.Cecil\Mono.CecilX.dll" />
