@@ -163,6 +163,7 @@ MonoBehaviour:
   syncInterval: 0.1
   abilityDatabase: {fileID: 11400000, guid: bd90ddd6416ca354792eaea05b0ceb41, type: 2}
   character: {fileID: 11400000, guid: e5758064760e01e4c9e62ea12b103192, type: 2}
+  team: 0
 --- !u!114 &2524789960037904295
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -208,6 +209,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  isTarget: 0
+  target: {fileID: 0}
+  point: {x: 0, y: 0, z: 0}
 --- !u!114 &4411156200447690298
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2620,6 +2624,10 @@ PrefabInstance:
       propertyPath: target
       value: 
       objectReference: {fileID: 1960080401273295257}
+    - target: {fileID: 952022957381564015, guid: f739c614b0a9dc0439071cbebedcc723, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5250854562154655578, guid: f739c614b0a9dc0439071cbebedcc723, type: 3}
       propertyPath: m_PresetInfoIsWorld
       value: 1

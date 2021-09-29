@@ -390,6 +390,28 @@ MonoBehaviour:
   spawnPrefabs:
   - {fileID: 3382352063740128489, guid: 38f22021b24551a449399d1086a129d4, type: 3}
   camera: {fileID: 0}
+--- !u!1 &1845452502 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1750057436528719658, guid: ab0ef960797ca1b4a8bf7928d7869607, type: 3}
+  m_PrefabInstance: {fileID: 1750057436608651103}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1845452503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1845452502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f5a93ec3777ffb4d8e4d44c927e1e6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  abilityDatabase: {fileID: 11400000, guid: bd90ddd6416ca354792eaea05b0ceb41, type: 2}
+  character: {fileID: 11400000, guid: e5758064760e01e4c9e62ea12b103192, type: 2}
+  team: 2
 --- !u!1001 &1651639140653440663
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -501,6 +523,10 @@ PrefabInstance:
     - target: {fileID: 1750057436528719655, guid: ab0ef960797ca1b4a8bf7928d7869607, type: 3}
       propertyPath: sceneId
       value: 3529342165
+      objectReference: {fileID: 0}
+    - target: {fileID: 1750057436528719656, guid: ab0ef960797ca1b4a8bf7928d7869607, type: 3}
+      propertyPath: team
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1750057436528719658, guid: ab0ef960797ca1b4a8bf7928d7869607, type: 3}
       propertyPath: m_Name

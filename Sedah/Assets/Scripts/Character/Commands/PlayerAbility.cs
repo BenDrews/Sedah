@@ -15,7 +15,7 @@ public class PlayerAbility : AbilityCast
         {
             if (Input.GetKeyDown(KeyCode.Q) || Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.E))
             {
-                int i = 99;
+                int i = -1;
                 if (Input.GetKeyDown(KeyCode.Q))
                 {
                     i = 0;
@@ -41,11 +41,11 @@ public class PlayerAbility : AbilityCast
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
                 //Checks to see if target is self, enemy, ally, or point.
-                if (ability.GetTarget() == "self")
+                if (ability.GetTarget() == TargetingType.Self)
                 {
                     CmdSetAbilityCastStateTarget(this.gameObject, i);
                 }
-                else if (ability.GetTarget() == "enemy")
+                else if (ability.GetTarget() == TargetingType.Enemy)
                 {
                     LayerMask layerMask = LayerMask.GetMask("TargetableCharacters");
                     if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
@@ -53,7 +53,7 @@ public class PlayerAbility : AbilityCast
                         GameObject obj = hit.transform.gameObject;
 
                         // Tag comparison with enemy
-                        if (obj.GetComponent<Health>() != null && obj.CompareTag("Enemy"))
+                        if (obj.GetComponent<CharacterObject>()?.team != character.team)
                         {
                             float dist = Vector3.Distance(transform.position, obj.transform.position);
                             if (dist <= ability.GetRange())
@@ -63,13 +63,13 @@ public class PlayerAbility : AbilityCast
                         }
                     }
                 }
-                else if (ability.GetTarget() == "ally")
+                else if (ability.GetTarget() == TargetingType.Ally)
                 {
                     LayerMask layerMask = LayerMask.GetMask("TargetableCharacters");
                     if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
                     {
                         GameObject obj = hit.transform.gameObject;
-                        if (obj.GetComponent<Health>() != null && obj.CompareTag("Ally"))
+                        if (obj.GetComponent<CharacterObject>()?.team == character.team)
                         {
                             float dist = Vector3.Distance(transform.position, obj.transform.position);
                             if (dist <= ability.GetRange())
@@ -79,7 +79,7 @@ public class PlayerAbility : AbilityCast
                         }
                     }
                 }
-                else if (ability.GetTarget() == "point")
+                else if (ability.GetTarget() == TargetingType.Point)
                 {
                     LayerMask layerMask = LayerMask.GetMask("Terrain");
                     if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
@@ -91,10 +91,8 @@ public class PlayerAbility : AbilityCast
                         }
                     }
                 }
-                base.Update();
-
             }
         }
-
+        base.Update();
     }
 }

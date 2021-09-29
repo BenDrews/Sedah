@@ -25,6 +25,8 @@ public class CharacterObject : NetworkBehaviour
     private EntityStateMachine stateMachine;
     private Animator animator;
 
+    public Team team = Team.Neutral;
+
     public void Awake()
     {
         Debug.Log("STATS LOADED");

@@ -4,6 +4,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 
+public enum TargetingType
+{
+    Self,
+    Enemy,
+    Ally,
+    Point
+}
+
 [System.Serializable]
 public abstract class Ability : NetworkBehaviour
 {
@@ -12,9 +20,9 @@ public abstract class Ability : NetworkBehaviour
     [SerializeField, Range(0, 999)] protected int cost = 0;
     [SerializeField, Range(0, 999)] protected int damage = 0;
     [SerializeField] protected float range = 0;
-    [SerializeField] protected string target = "";
+    [SerializeField] protected TargetingType target;
     [SerializeField] protected int cooldownTime = 0;
-    [SerializeField] protected bool onCooldown = false;
+    [SerializeField, HideInInspector] protected bool onCooldown = false;
 
     public int GetCost()
     {
@@ -41,7 +49,7 @@ public abstract class Ability : NetworkBehaviour
         return range;
     }
 
-    public string GetTarget()
+    public TargetingType GetTarget()
     {
         return target;
     }

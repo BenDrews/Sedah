@@ -1,7 +1,7 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Mirror;
 
 public enum StatusType
 {
@@ -10,29 +10,43 @@ public enum StatusType
     HealingOverTime,
     Poisoned
 }
-
-[CreateAssetMenu(fileName = "Status", menuName = "ScriptableObjects/Status")]
-
-public class Status : ScriptableObject
+public class Status
 {
-    [SerializeField] private string id;
     [SerializeField] private StatusType statusType;
     [SerializeField] private float _value;
-    public string ID
+    [SerializeField] private float duration;
+    [HideInInspector] public double timeApplied;
+
+    public Status(StatusEffect statusEffect)
     {
-        get { return id; }
-        private set { id = value; }
+        statusType = statusEffect.statusType;
+        _value = statusEffect.value;
+        duration = statusEffect.duration;
+        timeApplied = NetworkTime.time;
+    }
+    public Status(StatusType statusType, float _value, float duration)
+    {
+        this.statusType = statusType;
+        this._value = _value;
+        this.duration = duration;
+        timeApplied = NetworkTime.time;
     }
 
     public StatusType StatusType
     {
         get { return statusType; }
-        private set { statusType = value; }
+        set { statusType = value; }
     }
 
     public float Value
     {
         get { return _value; }
-        private set { _value = value; }
+        set { _value = value; }
+    }
+
+    public float Duration
+    {
+        get { return duration; }
+        set { duration = value; }
     }
 }

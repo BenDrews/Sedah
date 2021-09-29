@@ -68,7 +68,7 @@ MonoBehaviour:
   cost: 0
   damage: 30
   range: 500
-  target: enemy
+  target: 1
   cooldownTime: 3
   onCooldown: 0
   specialEffect: {fileID: 163064, guid: 2bdc186a2c521f1488fe14cb4a745323, type: 3}
