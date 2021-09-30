@@ -72,7 +72,7 @@ public abstract class AbilityCast : NetworkBehaviour
         {
             Ability ability = character.GetAbility(index);
             // Check if target is in range
-            float dist = Vector3.Distance(transform.position, target.transform.position);
+            float dist = Vector3.Distance(transform.position, point);
             if (dist <= ability.GetRange() && !ability.OnCooldown())
             {
                 // Stop moving if target is in range

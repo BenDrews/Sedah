@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mirror", "Mirror.csproj", "{27D897FC-9D07-4ADC-AF4F-D82FE54456D2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleWebTransport", "SimpleWebTransport.csproj", "{CAB240B3-2EE9-63BE-0865-769ED5BBAD8D}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly-CSharp.csproj", "{8070EB05-2D14-679A-CC3F-03DF692D6C93}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleWebTransport", "SimpleWebTransport.csproj", "{CAB240B3-2EE9-63BE-0865-769ED5BBAD8D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mirror.Examples", "Mirror.Examples.csproj", "{27FB44BC-EBC8-9524-797B-069CE5CCA3B9}"
 EndProject
@@ -35,14 +35,14 @@ Global
 		{27D897FC-9D07-4ADC-AF4F-D82FE54456D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{27D897FC-9D07-4ADC-AF4F-D82FE54456D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{27D897FC-9D07-4ADC-AF4F-D82FE54456D2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CAB240B3-2EE9-63BE-0865-769ED5BBAD8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CAB240B3-2EE9-63BE-0865-769ED5BBAD8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CAB240B3-2EE9-63BE-0865-769ED5BBAD8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CAB240B3-2EE9-63BE-0865-769ED5BBAD8D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8070EB05-2D14-679A-CC3F-03DF692D6C93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8070EB05-2D14-679A-CC3F-03DF692D6C93}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8070EB05-2D14-679A-CC3F-03DF692D6C93}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8070EB05-2D14-679A-CC3F-03DF692D6C93}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CAB240B3-2EE9-63BE-0865-769ED5BBAD8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CAB240B3-2EE9-63BE-0865-769ED5BBAD8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CAB240B3-2EE9-63BE-0865-769ED5BBAD8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CAB240B3-2EE9-63BE-0865-769ED5BBAD8D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{27FB44BC-EBC8-9524-797B-069CE5CCA3B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{27FB44BC-EBC8-9524-797B-069CE5CCA3B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{27FB44BC-EBC8-9524-797B-069CE5CCA3B9}.Release|Any CPU.ActiveCfg = Release|Any CPU

@@ -5,38 +5,19 @@ using UnityEngine;
 using Mirror;
 
 [RequireComponent(typeof(NetworkTransform))]
-public abstract class Projectile : NetworkBehaviour
+public abstract class Aoe : NetworkBehaviour
 {
+    protected double timeCreated;
     [HideInInspector]
     public CharacterObject owner;
     [HideInInspector]
     public AbilityEffect[] abilityEffects;
 
     public AbilityEffectData[] abilityEffectsData;
-    public float speed;
 
-    protected bool hasFired;
-    protected double timeFired;
-    protected List<CharacterObject> targetsHit = new List<CharacterObject>();
-
-
-    protected abstract Vector3 GetTargetDirection();
+    protected abstract bool ShouldFireAoe();
     protected abstract bool ShouldDestroy();
-    public void Fire()
-    {
-        if (Debug.isDebugBuild)
-        {
-            ValidateProjectile();
-        }
-        hasFired = true;
-        timeFired = NetworkTime.time;
-    }    
-
-    protected void ValidateProjectile()
-    {
-        Debug.Assert(owner != null, "Projectile [" + gameObject.name + "] needs to be fired by a character");            
-    }
-
+    protected abstract Collider[] HitColliders();
     protected bool CanHit(CharacterObject target)
     {
         return owner.team != target.team;
@@ -50,22 +31,22 @@ public abstract class Projectile : NetworkBehaviour
         }
     }
 
-    protected void OnTriggerEnter(Collider collider)
+    protected void Fire()
     {
-        CharacterObject target = collider.gameObject.GetComponent<CharacterObject>();
-        if (target == null)
+        Collider[] hitColliders = HitColliders();
+        foreach (var hitCollider in hitColliders)
         {
-            return;
-        }
-        if (CanHit(target))
-        {
-            HitTarget(target);
-            targetsHit.Add(target);
+            CharacterObject target = hitCollider.gameObject.GetComponent<CharacterObject>();
+            if (CanHit(target))
+            {
+                HitTarget(target);
+            }
         }
     }
 
     public void Start()
     {
+        timeCreated = NetworkTime.time;
         abilityEffects = new AbilityEffect[abilityEffectsData.Length];
         for (int i = 0; i < abilityEffectsData.Length; i++)
         {
@@ -79,14 +60,16 @@ public abstract class Projectile : NetworkBehaviour
 
     public void Update()
     {
-        if (hasFired)
-        {
-            transform.position += GetTargetDirection() * Time.deltaTime * speed;
+        if (isServer) { 
+            if (ShouldFireAoe())
+            {
+                Fire();
+            }
             if (ShouldDestroy())
             {
-                foreach(Transform child in transform)
+                foreach (Transform child in transform)
                 {
-                    Destroy(child.gameObject);
+                    Destroy(child);
                 }
                 Destroy(this);
             }

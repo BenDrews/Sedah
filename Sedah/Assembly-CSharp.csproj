@@ -53,20 +53,25 @@
     <UnityVersion>2020.3.18f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Abilities\Firebolt.cs" />
     <Compile Include="Assets\Scripts\EntityStates\IdlingState.cs" />
     <Compile Include="Assets\Scripts\UI\HealthDisplay.cs" />
     <Compile Include="Assets\Scripts\Items\Inventory.cs" />
     <Compile Include="Assets\Scripts\CameraMovement.cs" />
     <Compile Include="Assets\Scripts\Character\DamageType.cs" />
     <Compile Include="Assets\Scripts\Items\InventorySlot.cs" />
+    <Compile Include="Assets\Scripts\Abilities\AbilityEffects\DamageEffectData.cs" />
     <Compile Include="Assets\Scripts\Character\Commands\PlayerChooseLevel.cs" />
     <Compile Include="Assets\Scripts\Character\DamageInfo.cs" />
+    <Compile Include="Assets\Scripts\Character\Team.cs" />
     <Compile Include="Assets\Scripts\Character\Commands\AutoAttack.cs" />
     <Compile Include="Assets\Scripts\Mob\Mob.cs" />
+    <Compile Include="Assets\Scripts\Abilities\AbilityEffects\DamageEffect.cs" />
     <Compile Include="Assets\Scripts\EntityStates\EntityStateMachine.cs" />
     <Compile Include="Assets\Scripts\Mob\MobAutoAttack.cs" />
     <Compile Include="Assets\Scripts\Character\Commands\AbilityCast.cs" />
     <Compile Include="Assets\Scripts\LevelManagement\Floor.cs" />
+    <Compile Include="Assets\Scripts\Abilities\AbilityEffects\AbilityEffect.cs" />
     <Compile Include="Assets\Scripts\Abilities\Bash.cs" />
     <Compile Include="Assets\Scripts\NetworkingLobby\MatchMaker.cs" />
     <Compile Include="Assets\Scripts\Character\Commands\PlayerToggleScreen.cs" />
@@ -75,6 +80,7 @@
     <Compile Include="Assets\Scripts\PlayerCamera.cs" />
     <Compile Include="Assets\Scripts\Abilities\AbilityDataObject.cs" />
     <Compile Include="Assets\Scripts\Abilities\Ability.cs" />
+    <Compile Include="Assets\Scripts\Abilities\AbilityEffects\AbilityEffectData.cs" />
     <Compile Include="Assets\Scripts\EntityStates\EntityStateNames.cs" />
     <Compile Include="Assets\Scripts\EntityStates\AutoAttacking.cs" />
     <Compile Include="Assets\Scripts\Character\Commands\PlayerAutoAttack.cs" />
@@ -89,13 +95,18 @@
     <Compile Include="Assets\Scripts\NetworkingLobby\UIPlayer.cs" />
     <Compile Include="Assets\Scripts\Mob\ServerMovement.cs" />
     <Compile Include="Assets\Scripts\Mob\ServerAutoAttack.cs" />
+    <Compile Include="Assets\Scripts\Abilities\Projectiles\CharacterTargetedProjectile.cs" />
     <Compile Include="Assets\Scripts\Items\Item.cs" />
+    <Compile Include="Assets\Scripts\Character\Status.cs" />
+    <Compile Include="Assets\Scripts\Abilities\AbilityEffects\StatusEffectData.cs" />
     <Compile Include="Assets\Scripts\Character\Commands\Movement.cs" />
     <Compile Include="Assets\Scripts\Character\Stat.cs" />
     <Compile Include="Assets\Scripts\Mob\MobAbilityCast.cs" />
+    <Compile Include="Assets\Scripts\Abilities\AbilityEffects\StatusEffect.cs" />
     <Compile Include="Assets\Scripts\Items\ItemDatabase.cs" />
     <Compile Include="Assets\Scripts\Character\Commands\PlayerAbility.cs" />
     <Compile Include="Assets\Scripts\Character\Health.cs" />
+    <Compile Include="Assets\Scripts\Abilities\Projectiles\Projectile.cs" />
     <Compile Include="Assets\Scripts\LevelManagement\LevelManager.cs" />
     <Compile Include="Assets\Scripts\NetworkingLobby\UILobby.cs" />
     <Compile Include="Assets\Scripts\Character\Commands\PlayerMovement.cs" />
@@ -103,17 +114,9 @@
     <Compile Include="Assets\Scripts\EntityStates\EntityState.cs" />
     <Compile Include="Assets\Scripts\NetworkingLobby\AutoHostClient.cs" />
     <Compile Include="Assets\Scripts\LevelManagement\Dungeon.cs" />
-    <Compile Include="Assets\Scripts\Abilities\Firebolt.cs" />
-    <Compile Include="Assets\Scripts\Abilities\Projectiles\Projectile.cs" />
-    <Compile Include="Assets\Scripts\Abilities\Projectiles\CharacterTargetedProjectile.cs" />
-    <Compile Include="Assets\Scripts\Character\Team.cs" />
-    <Compile Include="Assets\Scripts\Abilities\AbilityEffects\AbilityEffect.cs" />
-    <Compile Include="Assets\Scripts\Abilities\AbilityEffects\DamageEffect.cs" />
-    <Compile Include="Assets\Scripts\Abilities\AbilityEffects\StatusEffect.cs" />
-    <Compile Include="Assets\Scripts\Character\Status.cs" />
-    <Compile Include="Assets\Scripts\Abilities\AbilityEffects\AbilityEffectData.cs" />
-    <Compile Include="Assets\Scripts\Abilities\AbilityEffects\DamageEffectData.cs" />
-    <Compile Include="Assets\Scripts\Abilities\AbilityEffects\StatusEffectData.cs" />
+    <Compile Include="Assets\Scripts\Abilities\PillarOfFire.cs" />
+    <Compile Include="Assets\Scripts\Abilities\Aoes\Aoe.cs" />
+    <Compile Include="Assets\Scripts\Abilities\Aoes\DelayedCircleAoe.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Mirror\Plugins\Mono.Cecil\Mono.CecilX.dll" />
