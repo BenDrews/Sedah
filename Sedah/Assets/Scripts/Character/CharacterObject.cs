@@ -18,6 +18,7 @@ public class CharacterObject : NetworkBehaviour
     //Status Effects for the PlayerCharacter
     private readonly Dictionary<StatusType, List<Status>> statusEffects = new Dictionary<StatusType, List<Status>>();
     [SerializeField]private readonly List<GameObject> abilities = new List<GameObject>();
+    [SerializeField] private GameObject abilityTemplate;
 
     private int gold = 0;
     private int level = 1;
@@ -43,24 +44,36 @@ public class CharacterObject : NetworkBehaviour
         characterStats.Add(StatType.MagicPen, new Stat(0, 0, StatType.MagicPen));
         characterStats.Add(StatType.AttackRange, new Stat(character.AttackRange, 0, StatType.AttackRange));
 
-        List<int> abilityIds = character.GetAbilities();
-        foreach (int a in abilityIds)
-        {
-            GameObject obj = Instantiate(abilityDatabase.GetAbility(a), transform);
-            NetworkServer.Spawn(obj);
-            abilities.Add(obj);
-        }
-        animator = GetComponent<Animator>();
         finishedLoading = true;
     }
 
-    public void Start()
+    public override void OnStartServer()
     {
-        if (isServer)
+        base.OnStartServer();
+        stateMachine = GetComponent<EntityStateMachine>();
+        stateMachine.SetNextState(new IdlingState(stateMachine));
+        List<int> abilityIds = character.GetAbilities();
+        Debug.Log(abilityDatabase);
+        foreach (int a in abilityIds)
         {
-            stateMachine = GetComponent<EntityStateMachine>();
-            stateMachine.SetNextState(new IdlingState(stateMachine));
+            GameObject obj = Instantiate(abilityTemplate, transform);
+            NetworkServer.Spawn(obj);
+            Debug.Log(abilityDatabase.GetAbility(a));
+            obj.GetComponent<AbilityTemplate>().Initialize(abilityDatabase.GetAbility(a));
+            abilities.Add(obj);
+            RpcAbilitySetup(obj, a);
         }
+        animator = GetComponent<Animator>();
+    }
+
+    [ClientRpc]
+
+    public void RpcAbilitySetup(GameObject obj, int i)
+    {
+        Debug.Log(abilityDatabase);
+        Debug.Log(abilityDatabase.GetAbility(i));
+        obj.GetComponent<AbilityTemplate>().Initialize(abilityDatabase.GetAbility(i));
+        abilities.Add(obj);
     }
 
     public CharacterObject()
@@ -121,13 +134,13 @@ public class CharacterObject : NetworkBehaviour
         statusEffects[status.StatusType].Add(status);
     }
 
-    public Ability GetAbility(int i)
+    public AbilityTemplate GetAbility(int i)
     {
         if (abilities.Count() <= i)
         {
             return null;
         }
-        return abilities[i].GetComponent<Ability>();
+        return abilities[i].GetComponent<AbilityTemplate>();
     }
 
     public void AddAbility(int i)

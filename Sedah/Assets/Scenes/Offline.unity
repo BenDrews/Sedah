@@ -305,8 +305,9 @@ MonoBehaviour:
   autoCreatePlayer: 1
   playerSpawnMethod: 0
   spawnPrefabs:
-  - {fileID: 3382352063740128489, guid: 38f22021b24551a449399d1086a129d4, type: 3}
+  - {fileID: 8856369956228063789, guid: 51c58660d471b024b917b80e24340df7, type: 3}
   - {fileID: 1750057436528719658, guid: ab0ef960797ca1b4a8bf7928d7869607, type: 3}
+  - {fileID: 7415895283376404964, guid: f7c5cf6401addc242bdbc29c2e310af1, type: 3}
   camera: {fileID: 8261618997686455734, guid: 38f71aff9d91ad641afbe2b397f1c4eb, type: 3}
 --- !u!4 &302637152
 Transform:

@@ -12,11 +12,10 @@ public abstract class AbilityCast : NetworkBehaviour
 
     // Ability index
     protected int index = 0;
-
+    private Animator animator;
     // Condition of whether ability needs a point or gameObject target.
     public bool isTarget = false;
-
-    public GameObject target;
+    public CharacterObject target;
     public Vector3 point;
 
     Coroutine runCd;
@@ -26,9 +25,10 @@ public abstract class AbilityCast : NetworkBehaviour
     {
         EntityStateMachine stateMachine = GetComponent<EntityStateMachine>();
         stateMachine.SetNextState(new CastingState(stateMachine));
-        this.target = target;
+        this.target = target.GetComponent<CharacterObject>();
         this.index = index;
         isTarget = true;
+        animator.SetBool("Casting", true);
     }
 
     [Command]
@@ -39,25 +39,27 @@ public abstract class AbilityCast : NetworkBehaviour
         this.point = point;
         this.index = index;
         isTarget = false;
+        animator.SetBool("Casting", true);
     }
 
-    protected void AttemptAbilityCast(GameObject target)
+    protected void AttemptAbilityCast(CharacterObject target)
     {
         EntityStateMachine stateMachine = GetComponent<EntityStateMachine>();
 
         if (stateMachine.GetState().type == EntityStateType.AbilityCast)
         {
-            Ability ability = character.GetAbility(index);
+            AbilityTemplate ability = character.GetAbility(index);
             // Check if target is in range
             float dist = Vector3.Distance(transform.position, target.transform.position);
             if (dist <= ability.GetRange() && !ability.OnCooldown())
             {
                 // Stop moving if target is in range
-                this.GetComponent<PlayerMovement>()?.CmdMove(transform.position);
+                //this.GetComponent<PlayerMovement>()?.CmdMove(transform.position);
                 FireAbilityCast(target);
             }
             else
             {
+                animator.SetBool("Casting", false);
                 //TODO" Get the player to move in range of ability cast
                 //this.GetComponent<PlayerMovement>()?.CmdMove(target.transform.position);
             }
@@ -70,24 +72,25 @@ public abstract class AbilityCast : NetworkBehaviour
 
         if (stateMachine.GetState().type == EntityStateType.AbilityCast)
         {
-            Ability ability = character.GetAbility(index);
+            AbilityTemplate ability = character.GetAbility(index);
             // Check if target is in range
             float dist = Vector3.Distance(transform.position, point);
             if (dist <= ability.GetRange() && !ability.OnCooldown())
             {
                 // Stop moving if target is in range
-                this.GetComponent<PlayerMovement>()?.CmdMove(transform.position);
+                //this.GetComponent<PlayerMovement>()?.CmdMove(transform.position);
                 FireAbilityCast(point);
             }
             else
             {
+                animator.SetBool("Casting", false);
                 //TODO" Get the player to move in range of ability cast
                 //this.GetComponent<MobMovement>()?.Move(target.transform.position);
             }
         }
     }
 
-    public IEnumerator RunCooldown(Ability ability, float cd)
+    public IEnumerator RunCooldown(AbilityTemplate ability, float cd)
     {
         ability.SetCooldown(true);
         yield return new WaitForSeconds(cd);
@@ -95,18 +98,18 @@ public abstract class AbilityCast : NetworkBehaviour
     }
 
     // Ability affects target.
-    protected void FireAbilityCast(GameObject target)
+    protected void FireAbilityCast(CharacterObject target)
     {
-        Ability ability = character.GetAbility(index);
-        ability.Activate(character.gameObject, target);
+        AbilityTemplate ability = character.GetAbility(index);
+        ability.Activate(character, target);
         runCd = StartCoroutine(RunCooldown(ability, ability.GetCooldown() * (1 - character.GetStatValue(StatType.CDR)/100)));
     }
 
     // Ability affects area/point.
     protected void FireAbilityCast(Vector3 point)
     {
-        Ability ability = character.GetAbility(index);
-        ability.Activate(character.gameObject, point);
+        AbilityTemplate ability = character.GetAbility(index);
+        ability.Activate(character, point);
         runCd = StartCoroutine(RunCooldown(ability, ability.GetCooldown() * (1 - character.GetStatValue(StatType.CDR)/100)));
     }
 
@@ -114,6 +117,7 @@ public abstract class AbilityCast : NetworkBehaviour
     {
         base.OnStartServer();
         this.character = GetComponent<CharacterObject>();
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame

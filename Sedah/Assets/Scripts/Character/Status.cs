@@ -8,7 +8,9 @@ public enum StatusType
     Burning,
     HealingReduced,
     HealingOverTime,
-    Poisoned
+    Poisoned,
+    ArmorBuff,
+    MRBuff
 }
 public class Status
 {

@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 5381934405682498362}
   - component: {fileID: 6781247511700407429}
   m_Layer: 0
-  m_Name: FireboltProjectile
+  m_Name: Projectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -116,10 +116,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   owner: {fileID: 0}
-  abilityEffectsData:
-  - {fileID: 11400000, guid: 3bb8039f20f37cc4484a6153ffb3e80e, type: 2}
-  - {fileID: 11400000, guid: 24c06cf0c39c0024c8472c7b8a0d287d, type: 2}
-  speed: 20
+  speed: 0
   target: {fileID: 0}
 --- !u!114 &213908276897534883
 MonoBehaviour:

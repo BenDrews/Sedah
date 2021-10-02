@@ -11,8 +11,6 @@ public abstract class Projectile : NetworkBehaviour
     public CharacterObject owner;
     [HideInInspector]
     public AbilityEffect[] abilityEffects;
-
-    public AbilityEffectData[] abilityEffectsData;
     public float speed;
 
     protected bool hasFired;
@@ -22,6 +20,7 @@ public abstract class Projectile : NetworkBehaviour
 
     protected abstract Vector3 GetTargetDirection();
     protected abstract bool ShouldDestroy();
+
     public void Fire()
     {
         if (Debug.isDebugBuild)
@@ -30,11 +29,11 @@ public abstract class Projectile : NetworkBehaviour
         }
         hasFired = true;
         timeFired = NetworkTime.time;
-    }    
+    }
 
     protected void ValidateProjectile()
     {
-        Debug.Assert(owner != null, "Projectile [" + gameObject.name + "] needs to be fired by a character");            
+        Debug.Assert(owner != null, "Projectile [" + gameObject.name + "] needs to be fired by a character");
     }
 
     protected bool CanHit(CharacterObject target)
@@ -63,9 +62,9 @@ public abstract class Projectile : NetworkBehaviour
             targetsHit.Add(target);
         }
     }
-
-    public void Start()
+    public void Initialize(ProjectileData projectileData)
     {
+        AbilityEffectData[] abilityEffectsData = projectileData.abilityEffectsData;
         abilityEffects = new AbilityEffect[abilityEffectsData.Length];
         for (int i = 0; i < abilityEffectsData.Length; i++)
         {
@@ -75,6 +74,7 @@ public abstract class Projectile : NetworkBehaviour
             object[] args = { data };
             abilityEffects[i] = (AbilityEffect)Activator.CreateInstance(type, args);
         }
+        speed = projectileData.speed;
     }
 
     public void Update()

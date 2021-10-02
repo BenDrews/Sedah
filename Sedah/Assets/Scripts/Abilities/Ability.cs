@@ -1,8 +1,6 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Mirror;
 
 public enum TargetingType
 {
@@ -11,57 +9,47 @@ public enum TargetingType
     Ally,
     Point
 }
-
-[System.Serializable]
-public abstract class Ability : NetworkBehaviour
+public abstract class Ability: ScriptableObject
 {
     [SerializeField] protected int id;
-    [SerializeField] protected Sprite sprite; // Drag & drop the sprite. It does not need to be in the `Resources` folder
-    [SerializeField, Range(0, 999)] protected int cost = 0;
-    [SerializeField, Range(0, 999)] protected int damage = 0;
-    [SerializeField] protected float range = 0;
-    [SerializeField] protected TargetingType target;
-    [SerializeField] protected int cooldownTime = 0;
+    public bool hasDash;
+    public GameObject specialEffect;
+    [SerializeField] public Sprite sprite;
+    [SerializeField] public float range = 0;
+    [SerializeField] public TargetingType target;
+    [SerializeField] public int cooldownTime = 0;
     [SerializeField, HideInInspector] protected bool onCooldown = false;
+    public AbilityEffectData[] abilityEffectsData;
 
-    public int GetCost()
-    {
-        return cost;
-    }
 
-    public bool OnCooldown()
-    {
-        return onCooldown;
-    }
-
-    public void SetCooldown(bool cd)
-    {
-        onCooldown = cd;
-    }
-
-    public int GetCooldown()
-    {
-        return cooldownTime;
-    }
-
-    public float GetRange()
-    {
-        return range;
-    }
-
-    public TargetingType GetTarget()
-    {
-        return target;
-    }
-
-    
-    public virtual void Activate(GameObject characterObject, GameObject gameObject2)
+    public virtual void Activate(CharacterObject self, CharacterObject target, AbilityEffect[] abilityEffects)
     {
 
     }
 
-    public virtual void Activate(GameObject characterObject, Vector3 point)
+    public virtual void Activate(CharacterObject self, Vector3 point, AbilityEffect[] abilityEffects)
     {
 
     }
+
+    public virtual void Activate(CharacterObject self, CharacterObject target)
+    {
+
+    }
+
+    public virtual void Activate(CharacterObject self, Vector3 point)
+    {
+
+    }
+
+    public virtual IEnumerator ActivateDash(CharacterObject self, CharacterObject target, AbilityEffect[] abilityEffects)
+    {
+        yield return new WaitForSeconds(0.01f);
+    }
+
+    public virtual IEnumerator ActivateDash(CharacterObject self, CharacterObject target)
+    {
+        yield return new WaitForSeconds(0.01f);
+    }
+
 }

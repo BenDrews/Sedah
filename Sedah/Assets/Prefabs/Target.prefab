@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 1750057436528719653}
   - component: {fileID: 1750057436528719654}
   - component: {fileID: 1750057436528719655}
-  - component: {fileID: 1750057436528719656}
   - component: {fileID: 1750057436528719657}
   - component: {fileID: 1750057436528719650}
   - component: {fileID: 2287752823814398069}
@@ -119,23 +118,6 @@ MonoBehaviour:
   visible: 0
   m_AssetId: ab0ef960797ca1b4a8bf7928d7869607
   hasSpawned: 0
---- !u!114 &1750057436528719656
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1750057436528719658}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f5a93ec3777ffb4d8e4d44c927e1e6a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  abilityDatabase: {fileID: 11400000, guid: bd90ddd6416ca354792eaea05b0ceb41, type: 2}
-  character: {fileID: 11400000, guid: e5758064760e01e4c9e62ea12b103192, type: 2}
-  team: 0
 --- !u!114 &1750057436528719657
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -201,6 +183,7 @@ MonoBehaviour:
   syncInterval: 0.1
   abilityDatabase: {fileID: 11400000, guid: bd90ddd6416ca354792eaea05b0ceb41, type: 2}
   character: {fileID: 11400000, guid: e5758064760e01e4c9e62ea12b103192, type: 2}
+  abilityTemplate: {fileID: 8856369956228063789, guid: 51c58660d471b024b917b80e24340df7, type: 3}
   team: 2
 --- !u!54 &523483028162735637
 Rigidbody:

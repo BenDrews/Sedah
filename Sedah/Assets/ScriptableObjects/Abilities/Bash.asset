@@ -9,12 +9,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a7ef65d9e19ac794ca2605db4c5260ff, type: 3}
+  m_Script: {fileID: 11500000, guid: 49d4afc124517fc44a4275c2afd74960, type: 3}
   m_Name: Bash
   m_EditorClassIdentifier: 
   id: 0
+  hasDash: 0
+  specialEffect: {fileID: 163064, guid: 2bdc186a2c521f1488fe14cb4a745323, type: 3}
   sprite: {fileID: 0}
-  cost: 4
-  damage: 63
-  target: 
-  effect: 
+  cost: 0
+  damage: 0
+  range: 300
+  target: 1
+  cooldownTime: 5
+  onCooldown: 0
+  abilityEffectsData:
+  - {fileID: 11400000, guid: 79b1af654eba9784e8dd226ede8cb71a, type: 2}
