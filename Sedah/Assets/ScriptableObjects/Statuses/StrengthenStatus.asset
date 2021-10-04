@@ -9,7 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 50ab6e298a24875459d28f50d22e0f46, type: 3}
-  m_Name: FireboltBurningEffect
+  m_Script: {fileID: 11500000, guid: b844895b38d587c4d9cf79242e41e93a, type: 3}
+  m_Name: StrengthenStatus
   m_EditorClassIdentifier: 
-  status: {fileID: 11400000, guid: 77453951b0ba5bf4ba7f20cdbfcc3072, type: 2}
+  statusType: 4
+  _value: 5
+  duration: 5
+  timeApplied: 0
+  _static: 1
+  eot: 0
+  statType: 2
+  statModType: 100
+  order: 0

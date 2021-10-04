@@ -4,18 +4,23 @@ using UnityEngine;
 
 public class StatusEffect : AbilityEffect
 {
-    public StatusType statusType;
-    public float value;
-    public float duration;
+    public Status status;
+    public bool affectSelf;
 
     public StatusEffect(StatusEffectData data)
     {
-        statusType = data.statusType;
-        value = data.value;
-        duration = data.duration;
+        status = data.status;
+        affectSelf = data.affectSelf;
     }
     public override void Invoke(CharacterObject owner, CharacterObject target)
     {
-        target.AddStatus(new Status(this));
+        if (affectSelf)
+        {
+            owner.AddStatus(status);
+        }
+        else
+        {
+            target.AddStatus(status);
+        }
     }
 }

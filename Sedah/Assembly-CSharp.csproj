@@ -100,7 +100,7 @@
     <Compile Include="Assets\Scripts\Mob\ServerAutoAttack.cs" />
     <Compile Include="Assets\Scripts\Abilities\Projectiles\CharacterTargetedProjectile.cs" />
     <Compile Include="Assets\Scripts\Items\Item.cs" />
-    <Compile Include="Assets\Scripts\Character\Status.cs" />
+    <Compile Include="Assets\Scripts\Statuses\Status.cs" />
     <Compile Include="Assets\Scripts\Abilities\AbilityEffects\StatusEffectData.cs" />
     <Compile Include="Assets\Scripts\Character\Commands\Movement.cs" />
     <Compile Include="Assets\Scripts\Character\Stat.cs" />
@@ -109,6 +109,7 @@
     <Compile Include="Assets\Scripts\Items\ItemDatabase.cs" />
     <Compile Include="Assets\Scripts\Character\Commands\PlayerAbility.cs" />
     <Compile Include="Assets\Scripts\Character\Health.cs" />
+    <Compile Include="Assets\Scripts\Abilities\Projectiles\ProjectileData.cs" />
     <Compile Include="Assets\Scripts\Abilities\AbilityTemplate.cs" />
     <Compile Include="Assets\Scripts\Abilities\Projectiles\Projectile.cs" />
     <Compile Include="Assets\Scripts\LevelManagement\LevelManager.cs" />
@@ -119,7 +120,8 @@
     <Compile Include="Assets\Scripts\EntityStates\EntityState.cs" />
     <Compile Include="Assets\Scripts\NetworkingLobby\AutoHostClient.cs" />
     <Compile Include="Assets\Scripts\LevelManagement\Dungeon.cs" />
-    <Compile Include="Assets\Scripts\Abilities\Projectiles\ProjectileData.cs" />
+    <Compile Include="Assets\Scripts\Statuses\DamageStatus.cs" />
+    <Compile Include="Assets\Scripts\Statuses\BuffStatus.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Mirror\Plugins\Mono.Cecil\Mono.CecilX.dll" />

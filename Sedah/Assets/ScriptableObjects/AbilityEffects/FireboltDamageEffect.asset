@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e71d68725b9f9f41ace98bf42435b17, type: 3}
   m_Name: FireboltDamageEffect
   m_EditorClassIdentifier: 
-  damageAmount: 100
+  damageAmount: 30
   damageType: 1

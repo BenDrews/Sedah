@@ -68,6 +68,7 @@ public class Stat
                 _value = CalculateFinalValue();
                 isDirty = false;
             }
+
             return _value;
         }
     }
@@ -93,6 +94,7 @@ public class Stat
         isDirty = true;
         return statModifiers.Remove(mod);
     }
+
     public virtual bool RemoveAllModifiersFromSource(object source)
     {
         bool didRemove = false;

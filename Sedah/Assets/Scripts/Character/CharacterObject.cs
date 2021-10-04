@@ -53,12 +53,10 @@ public class CharacterObject : NetworkBehaviour
         stateMachine = GetComponent<EntityStateMachine>();
         stateMachine.SetNextState(new IdlingState(stateMachine));
         List<int> abilityIds = character.GetAbilities();
-        Debug.Log(abilityDatabase);
         foreach (int a in abilityIds)
         {
             GameObject obj = Instantiate(abilityTemplate, transform);
             NetworkServer.Spawn(obj);
-            Debug.Log(abilityDatabase.GetAbility(a));
             obj.GetComponent<AbilityTemplate>().Initialize(abilityDatabase.GetAbility(a));
             abilities.Add(obj);
             RpcAbilitySetup(obj, a);
@@ -76,6 +74,36 @@ public class CharacterObject : NetworkBehaviour
         abilities.Add(obj);
     }
 
+    public void Update()
+    {
+        if (isServer)
+        {
+            List<StatusType> removeStatus1 = new List<StatusType>();
+            foreach (KeyValuePair<StatusType, List<Status>> entry in statusEffects)
+            {
+                List<Status> removeStatus2 = new List<Status>();
+                foreach (Status status in entry.Value)
+                {
+                    if (status.HasElapsed())
+                    {
+                        removeStatus2.Add(status);
+                    }
+                }
+                foreach (Status status in removeStatus2)
+                {
+                    entry.Value.Remove(status);
+                }
+                if (entry.Value.Count == 0)
+                {
+                    removeStatus1.Add(entry.Key);
+                }
+            }
+            foreach (StatusType status in removeStatus1)
+            {
+                statusEffects.Remove(status);
+            }
+        }
+    }
     public CharacterObject()
     {
 
@@ -131,6 +159,7 @@ public class CharacterObject : NetworkBehaviour
         {
             statusEffects.Add(status.StatusType, new List<Status>());
         }
+        StartCoroutine(status.DurationElapsed(this));
         statusEffects[status.StatusType].Add(status);
     }
 

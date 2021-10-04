@@ -43,7 +43,6 @@ public class PlayerAbility : AbilityCast
                 //Checks to see if target is self, enemy, ally, or point.
                 if (ability.GetTarget() == TargetingType.Self)
                 {
-                    Debug.Log("SELFCAST");
                     CmdSetAbilityCastStateTarget(this.gameObject, i);
                 }
                 else if (ability.GetTarget() == TargetingType.Enemy)
@@ -58,7 +57,6 @@ public class PlayerAbility : AbilityCast
                             float dist = Vector3.Distance(transform.position, obj.transform.position);
                             if (dist <= ability.GetRange())
                             {
-                                Debug.Log(obj);
                                 CmdSetAbilityCastStateTarget(obj, i);
                             }
                         }

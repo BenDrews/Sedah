@@ -49,7 +49,7 @@ public abstract class AutoAttack : NetworkBehaviour
 
     protected void FireAutoAttack(GameObject target)
     {
-        float damage = character.GetStatValue(StatType.AttackDamage);
+        float damage = character.GetStat(StatType.AttackDamage).Value;
         float attackSpeed = character.GetStatValue(StatType.AttackSpeed);
         DamageInfo dmgInfo = new DamageInfo(damage, gameObject, target.transform.position, DamageType.Physical);
         target.GetComponent<Health>().TakeDamage(dmgInfo);
@@ -66,12 +66,9 @@ public abstract class AutoAttack : NetworkBehaviour
     // Update is called once per frame
     public void Update()
     {
-        if (hasAuthority)
+        if (isServer)
         {
-            if (isServer)
-            {
-                AttemptAutoAttack(target);
-            }
+            AttemptAutoAttack(target);
         }
     }
 }
