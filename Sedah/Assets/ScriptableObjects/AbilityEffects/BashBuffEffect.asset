@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: BashBuffEffect
   m_EditorClassIdentifier: 
   status: {fileID: 11400000, guid: 99c9fc98fbf0f5749984a5177fdd40b8, type: 2}
-  affectSelf: 0
+  affectSelf: 1

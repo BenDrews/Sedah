@@ -51,15 +51,18 @@ public abstract class Projectile : NetworkBehaviour
 
     protected void OnTriggerEnter(Collider collider)
     {
-        CharacterObject target = collider.gameObject.GetComponent<CharacterObject>();
-        if (target == null)
+        if (isServer)
         {
-            return;
-        }
-        if (CanHit(target))
-        {
-            HitTarget(target);
-            targetsHit.Add(target);
+            CharacterObject target = collider.gameObject.GetComponent<CharacterObject>();
+            if (target == null)
+            {
+                return;
+            }
+            if (CanHit(target))
+            {
+                HitTarget(target);
+                targetsHit.Add(target);
+            }
         }
     }
     public void Initialize(ProjectileData projectileData)
@@ -88,8 +91,14 @@ public abstract class Projectile : NetworkBehaviour
                 {
                     Destroy(child.gameObject);
                 }
-                Destroy(this);
+                Destroy(this.gameObject);
             }
         }
+    }
+
+    [ClientRpc]
+    public void RpcDestroy(GameObject obj)
+    {
+        Destroy(obj);
     }
 }

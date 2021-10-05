@@ -56,6 +56,7 @@
     <Compile Include="Assets\Scripts\Abilities\TargetProjectile.cs" />
     <Compile Include="Assets\Scripts\Abilities\PillarOfFire.cs" />
     <Compile Include="Assets\Scripts\EntityStates\IdlingState.cs" />
+    <Compile Include="Assets\Scripts\Statuses\DamageStatus.cs" />
     <Compile Include="Assets\Scripts\UI\HealthDisplay.cs" />
     <Compile Include="Assets\Scripts\Items\Inventory.cs" />
     <Compile Include="Assets\Scripts\CameraMovement.cs" />
@@ -119,9 +120,11 @@
     <Compile Include="Assets\Scripts\NetworkingLobby\Player.cs" />
     <Compile Include="Assets\Scripts\EntityStates\EntityState.cs" />
     <Compile Include="Assets\Scripts\NetworkingLobby\AutoHostClient.cs" />
-    <Compile Include="Assets\Scripts\LevelManagement\Dungeon.cs" />
-    <Compile Include="Assets\Scripts\Statuses\DamageStatus.cs" />
     <Compile Include="Assets\Scripts\Statuses\BuffStatus.cs" />
+    <Compile Include="Assets\Scripts\LevelManagement\Dungeon.cs" />
+    <Compile Include="Assets\Scripts\UI\HealthDisplayHUD.cs" />
+    <Compile Include="Assets\Scripts\UI\StatUI.cs" />
+    <Compile Include="Assets\Scripts\UI\AbilityUI.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Mirror\Plugins\Mono.Cecil\Mono.CecilX.dll" />

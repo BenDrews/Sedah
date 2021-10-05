@@ -28,7 +28,6 @@ public class AbilityTemplate : NetworkBehaviour
 
     void Start()
     {
-        Initialize(ability);
     }
 
     public void Initialize(Ability selectedAbility)
@@ -106,7 +105,7 @@ public class AbilityTemplate : NetworkBehaviour
     public IEnumerator DestroyEffect(GameObject effect)
     {
         yield return new WaitForSeconds(2f);
-        Destroy(effect);
+        NetworkServer.Destroy(effect);
     }
 
     public bool OnCooldown()
@@ -134,4 +133,8 @@ public class AbilityTemplate : NetworkBehaviour
         return target;
     }
 
+    public Sprite GetSprite()
+    {
+        return myButtonImage;
+    }
 }

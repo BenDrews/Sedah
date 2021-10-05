@@ -6,32 +6,31 @@ using Mirror;
 public class PlayerToggleScreen : NetworkBehaviour
 {
 
-    public Canvas canvas;
+    public GameObject menu;
     // Start is called before the first frame update
     void Start()
     {
         
     }
 
-    public void SetCanvas(Canvas target)
+    public void SetMenu(GameObject target)
     {
-        canvas = target;
-        Debug.Log("activated" + canvas);
-        canvas.enabled = false;
+        menu = target;
+        menu.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     { 
-        if (Input.GetKeyDown(KeyCode.M) && canvas != null)
+        if (Input.GetKeyDown(KeyCode.M) && menu != null)
         {
-            if (canvas.enabled)
+            if (menu.active)
             {
-                canvas.enabled = false;
+                menu.SetActive(false);
             }
             else
             {
-                canvas.enabled = true;
+                menu.SetActive(true);
             }
         }
     }

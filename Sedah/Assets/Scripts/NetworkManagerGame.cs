@@ -33,7 +33,8 @@ namespace Sedah
                 GameObject uiScreen = GameObject.FindGameObjectWithTag("UIScreen");
                 if (uiScreen != null)
                 {
-                    Player.localPlayer.GetComponent<PlayerToggleScreen>().SetCanvas(uiScreen.GetComponent<Canvas>());
+                    Player.localPlayer.GetComponent<PlayerToggleScreen>().SetMenu(GameObject.FindGameObjectWithTag("FloorSelector"));
+                    uiScreen.GetComponentInChildren<HealthDisplayHUD>().target = Player.localPlayer.gameObject;
                     uiScreen.GetComponent<Canvas>().worldCamera = playerCamTarget.GetComponent<Camera>();
                 }
             }
