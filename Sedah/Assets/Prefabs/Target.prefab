@@ -182,7 +182,10 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   abilityDatabase: {fileID: 11400000, guid: bd90ddd6416ca354792eaea05b0ceb41, type: 2}
+  statusDatabase: {fileID: 11400000, guid: dff4ab936bf80f347ae45e807554b6b2, type: 2}
+  statuss: {fileID: 0}
   character: {fileID: 11400000, guid: e5758064760e01e4c9e62ea12b103192, type: 2}
+  gay: Gay
   abilityTemplate: {fileID: 8856369956228063789, guid: 51c58660d471b024b917b80e24340df7, type: 3}
   team: 2
 --- !u!54 &523483028162735637

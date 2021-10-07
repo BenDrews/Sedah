@@ -10,14 +10,15 @@ using Mirror;
 public class CharacterObject : NetworkBehaviour
 {
     [SerializeField] private AbilityDatabase abilityDatabase;
-    [SerializeField] private Character character;    
+    [SerializeField] private StatusDatabase statusDatabase;
+    [SerializeField] private Character character;
 
     //Stats for the PlayerCharacter
     private Dictionary<StatType, Stat> characterStats = new Dictionary<StatType, Stat>();
 
     //Status Effects for the PlayerCharacter
     private readonly Dictionary<StatusType, List<Status>> statusEffects = new Dictionary<StatusType, List<Status>>();
-    [SerializeField]private readonly List<GameObject> abilities = new List<GameObject>();
+    [SerializeField] private readonly List<GameObject> abilities = new List<GameObject>();
     [SerializeField] private GameObject abilityTemplate;
 
     private int gold = 0;
@@ -52,12 +53,13 @@ public class CharacterObject : NetworkBehaviour
         base.OnStartServer();
         stateMachine = GetComponent<EntityStateMachine>();
         stateMachine.SetNextState(new IdlingState(stateMachine));
+        RpcEntityStateSetup();
         List<int> abilityIds = character.GetAbilities();
         foreach (int a in abilityIds)
         {
             GameObject obj = Instantiate(abilityTemplate, transform);
             NetworkServer.Spawn(obj);
-            obj.GetComponent<AbilityTemplate>().Initialize(abilityDatabase.GetAbility(a));
+            obj.GetComponent<Ability>().Initialize(abilityDatabase.GetAbility(a));
             abilities.Add(obj);
             RpcAbilitySetup(obj, a);
         }
@@ -65,13 +67,26 @@ public class CharacterObject : NetworkBehaviour
     }
 
     [ClientRpc]
+    public void RpcEntityStateSetup()
+    {
+        if (isClientOnly)
+        {
+            stateMachine = GetComponent<EntityStateMachine>();
+            stateMachine.SetNextState(new IdlingState(stateMachine));
+            animator = GetComponent<Animator>();
+        }
+    }
 
+    [ClientRpc]
     public void RpcAbilitySetup(GameObject obj, int i)
     {
-        Debug.Log(abilityDatabase);
-        Debug.Log(abilityDatabase.GetAbility(i));
-        obj.GetComponent<AbilityTemplate>().Initialize(abilityDatabase.GetAbility(i));
-        abilities.Add(obj);
+        if (isClientOnly)
+        {
+            stateMachine = GetComponent<EntityStateMachine>();
+            stateMachine.SetNextState(new IdlingState(stateMachine));
+            obj.GetComponent<Ability>().Initialize(abilityDatabase.GetAbility(i));
+            abilities.Add(obj);
+        }
     }
 
     public void Update()
@@ -92,18 +107,52 @@ public class CharacterObject : NetworkBehaviour
                 foreach (Status status in removeStatus2)
                 {
                     entry.Value.Remove(status);
+                    if (isLocalPlayer)
+                    {
+                        GameObject.Find("StatusUI")?.GetComponent<StatusUI>().RemoveIcon(status.id);
+                    }
+
+                    RpcRemoveStatus(entry.Value.IndexOf(status), entry.Key);
                 }
+                
                 if (entry.Value.Count == 0)
                 {
                     removeStatus1.Add(entry.Key);
                 }
             }
-            foreach (StatusType status in removeStatus1)
+            foreach (StatusType stType in removeStatus1)
             {
-                statusEffects.Remove(status);
+                statusEffects.Remove(stType);
+                RpcRemoveStatusList(stType);
             }
         }
     }
+
+    [ClientRpc]
+    public void RpcRemoveStatus(int status, StatusType stType)
+    {
+        if (isClientOnly)
+        {
+            if (statusEffects.Count > 0)
+            {
+                statusEffects[stType].RemoveAt(status);
+                if (isLocalPlayer)
+                {
+                    GameObject.Find("StatusUI")?.GetComponent<StatusUI>().RemoveIcon(status);
+                }
+            }
+        }
+    }
+
+    [ClientRpc]
+    public void RpcRemoveStatusList(StatusType stType)
+    {
+        if (isClientOnly)
+        {
+            statusEffects.Remove(stType);
+        }
+    }
+
     public CharacterObject()
     {
 
@@ -155,21 +204,49 @@ public class CharacterObject : NetworkBehaviour
 
     public void AddStatus(Status status)
     {
+        StatusData data = statusDatabase.GetStatus(status.id);
         if (!statusEffects.ContainsKey(status.StatusType))
         {
             statusEffects.Add(status.StatusType, new List<Status>());
         }
         StartCoroutine(status.DurationElapsed(this));
         statusEffects[status.StatusType].Add(status);
+        
+        if (isLocalPlayer)
+        {
+            GameObject.Find("StatusUI")?.GetComponent<StatusUI>().CreateIcon(status);
+        }
+
+        RpcAddStatus(status.id);
     }
 
-    public AbilityTemplate GetAbility(int i)
+    [ClientRpc]
+    public void RpcAddStatus(int id)
+    {
+        if (isClientOnly)
+        {
+            StatusData data = statusDatabase.GetStatus(id);
+            Status status = new Status(data, this, this, true);
+            if (!statusEffects.ContainsKey(status.StatusType))
+            {
+                statusEffects.Add(status.StatusType, new List<Status>());
+            }
+            StartCoroutine(status.DurationElapsed(this));
+            statusEffects[status.StatusType].Add(status);
+            if (isLocalPlayer)
+            {
+                GameObject.Find("StatusUI")?.GetComponent<StatusUI>().CreateIcon(status);
+            }
+        }
+    }
+
+    public Ability GetAbility(int i)
     {
         if (abilities.Count() <= i)
         {
             return null;
         }
-        return abilities[i].GetComponent<AbilityTemplate>();
+        return abilities[i].GetComponent<Ability>();
     }
 
     public void AddAbility(int i)
@@ -179,14 +256,25 @@ public class CharacterObject : NetworkBehaviour
 
     public void AddStatModifier(StatModifier statModifier, StatType sType)
     {
+        Debug.Log(statModifier);
         characterStats[sType].AddModifier(statModifier);
+        RpcModifyStat(characterStats[sType].Value, sType);
+    }
+
+    [ClientRpc]
+    public void RpcModifyStat(float value, StatType sType)
+    {
+        if (isClientOnly)
+        {
+            characterStats[sType].BaseValue = value;
+        }
     }
 
     public void RemoveStatModifier(StatModifier statModifier, StatType sType)
     {
         characterStats[sType].RemoveModifier(statModifier);
+        RpcModifyStat(characterStats[sType].Value, sType);
     }
-    
 
     public void AddGold(int g)
     {

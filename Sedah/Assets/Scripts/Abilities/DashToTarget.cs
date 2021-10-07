@@ -6,7 +6,7 @@ using UnityEngine.AI;
 using System;
 
 [CreateAssetMenu(fileName = "DashToTarget", menuName = "ScriptableObjects/Abilities/DashToTarget")]
-public class DashToTarget : Ability
+public class DashToTarget : AbilityData
 {
     public override void Activate(CharacterObject self, CharacterObject target)
     {

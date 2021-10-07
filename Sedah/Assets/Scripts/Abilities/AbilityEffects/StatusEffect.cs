@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class StatusEffect : AbilityEffect
 {
-    public Status status;
+    public StatusData status;
     public bool affectSelf;
 
     public StatusEffect(StatusEffectData data)
@@ -16,11 +16,11 @@ public class StatusEffect : AbilityEffect
     {
         if (affectSelf)
         {
-            owner.AddStatus(status);
+            owner.AddStatus(new Status(status, owner, owner, false));
         }
         else
         {
-            target.AddStatus(status);
+            target.AddStatus(new Status(status, owner, target, false));
         }
     }
 }

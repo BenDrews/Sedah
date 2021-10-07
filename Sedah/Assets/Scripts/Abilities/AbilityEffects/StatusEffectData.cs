@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "StatusEffect", menuName = "ScriptableObjects/AbilityEffects/StatusEffect")]
 public class StatusEffectData : AbilityEffectData
 {
-    public Status status;
+    public StatusData status;
 
     // choose to affect target or owner.
     public bool affectSelf;

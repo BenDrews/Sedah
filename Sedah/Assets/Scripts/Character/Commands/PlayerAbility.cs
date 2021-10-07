@@ -29,7 +29,7 @@ public class PlayerAbility : AbilityCast
                     i = 2;
                 }
                 CharacterObject character = this.GetComponent<CharacterObject>();
-                AbilityTemplate ability = character.GetAbility(i);
+                Ability ability = character.GetAbility(i);
 
                 if (ability == null)
                 {

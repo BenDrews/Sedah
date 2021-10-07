@@ -4,7 +4,7 @@ using UnityEngine;
 using Mirror;
 [System.Serializable]
 [CreateAssetMenu(fileName = "TargetProjectile", menuName = "ScriptableObjects/Abilities/TargetProjectile")]
-public class TargetProjectile: Ability
+public class TargetProjectile: AbilityData
 {
     public GameObject projectilePrefab;
     public ProjectileData projectileData;

@@ -5,7 +5,7 @@ using Mirror;
 [System.Serializable]
 
 [CreateAssetMenu(fileName = "TargetAbility", menuName = "ScriptableObjects/Abilities/TargetAbility")]
-public class TargetAbility : Ability
+public class TargetAbility : AbilityData
 {
     public override void Activate(CharacterObject attacker, CharacterObject target, AbilityEffect[] abilityEffects)
     {

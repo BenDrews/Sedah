@@ -12,12 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b844895b38d587c4d9cf79242e41e93a, type: 3}
   m_Name: StrengthenStatus
   m_EditorClassIdentifier: 
-  statusType: 4
+  id: 1
+  statusType: 6
   _value: 5
-  duration: 5
+  duration: 2
   timeApplied: 0
   _static: 1
   eot: 0
-  statType: 2
-  statModType: 100
-  order: 0
+  hasStatModifier: 1
+  image: {fileID: 0}
+  statTypeStatic: 2
+  statModTypeStatic: 100
+  orderStatic: 2
+  statTypeEOT: 2
+  statModTypeEOT: 100
+  orderEOT: 2

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 
-public class PillarOfFire : Ability
+public class PillarOfFire : AbilityData
 {
     [SerializeField] protected GameObject aoePrefab;
     public float delay;

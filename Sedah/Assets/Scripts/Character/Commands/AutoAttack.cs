@@ -19,6 +19,14 @@ public abstract class AutoAttack : NetworkBehaviour
         EntityStateMachine stateMachine = GetComponent<EntityStateMachine>();
         stateMachine.SetNextState(new AutoAttackingState(stateMachine));
         this.target = target;
+        RpcSetAutoAttackState();
+    }
+
+    [ClientRpc]
+    protected void RpcSetAutoAttackState()
+    {
+        EntityStateMachine stateMachine = GetComponent<EntityStateMachine>();
+        stateMachine.SetNextState(new AutoAttackingState(stateMachine));
     }
 
     protected void AttemptAutoAttack(GameObject target)

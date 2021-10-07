@@ -32,6 +32,7 @@ public class Stat
     //isDirty is to prevent recalculating finalStatValue constantly.
     public bool isDirty = true;
     public float _value;
+    public bool rpcUpdate = false;
 
     public readonly List<StatModifier> statModifiers = new List<StatModifier>();
     public readonly List<StatModifier> StatModifiers;
@@ -55,6 +56,7 @@ public class Stat
     public void LevelUp(int level)
     {
         BaseValue += level * ValuePerLevel;
+        rpcUpdate = true;
     }
 
     // Change Value
@@ -78,6 +80,7 @@ public class Stat
         isDirty = true;
         statModifiers.Add(mod);
         statModifiers.Sort(CompareModifierOrder);
+        rpcUpdate = true;
     }
 
     protected virtual int CompareModifierOrder(StatModifier a, StatModifier b)
@@ -92,6 +95,7 @@ public class Stat
     public virtual bool RemoveModifier(StatModifier mod)
     {
         isDirty = true;
+        rpcUpdate = true;
         return statModifiers.Remove(mod);
     }
 
@@ -106,6 +110,7 @@ public class Stat
                 isDirty = true;
                 didRemove = true;
                 statModifiers.RemoveAt(i);
+                rpcUpdate = true;
             }
         }
         return didRemove;

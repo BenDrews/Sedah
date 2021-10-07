@@ -3,25 +3,39 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 
-public enum StatusType
+public class Status
 {
-    Burning,
-    HealingReduced,
-    HealingOverTime,
-    Poisoned,
-    ArmorBuff,
-    MRBuff
-}
-public class Status: ScriptableObject
-{
-    [SerializeField] protected StatusType statusType;
-    [SerializeField] protected float _value;
-    [SerializeField] protected float duration;
-    [HideInInspector] public double timeApplied;
+    public int id;
+    private Sprite image;
+    private StatusType statusType;
+    private float _value;
+    private float duration;
+    public double timeApplied;
     private bool elapsed = false;
-    [SerializeField] protected bool _static;
-    [SerializeField] protected bool eot;
-    protected CharacterObject owner;
+    private bool _static;
+    private bool eot;
+    private bool hasStatModifier;
+    private bool isDummy;
+    private StatusData data;
+    private CharacterObject owner;
+    private CharacterObject target;
+    private StatModifier statModifier;
+    private List<StatModifier> statModifiers = new List<StatModifier>();
+    public Status(StatusData data, CharacterObject owner, CharacterObject target, bool isDummy)
+    {
+        this.data = data;
+        id = data.id;
+        _value = data.Value;
+        duration = data.Duration;
+        _static = data.Static;
+        eot = data.EOT;
+        hasStatModifier = data.HasStatModifier;
+        this.owner = owner;
+        this.target = target;
+        this.isDummy = isDummy;
+        image = data.Image;
+
+    }
 
     public StatusType StatusType
     {
@@ -35,10 +49,28 @@ public class Status: ScriptableObject
         set { _value = value; }
     }
 
+    public Sprite Image
+    {
+        get { return image; }
+        set { image = value; }
+    }
+
     public float Duration
     {
         get { return duration; }
         set { duration = value; }
+    }
+
+    public bool Static
+    {
+        get { return _static; }
+        set { _static = value; }
+    }
+
+    public bool EOT
+    {
+        get { return eot; }
+        set { eot = value; }
     }
 
     public bool HasElapsed()
@@ -46,46 +78,39 @@ public class Status: ScriptableObject
         return elapsed;
     }
 
-    public bool Static()
-    {
-        return _static;
-    }
-
-    public bool EOT()
-    {
-        return eot;
-    }
-
     public IEnumerator DurationElapsed(CharacterObject target)
     {
-        if (_static)
+        elapsed = false;
+        if (_static && !isDummy)
         {
-            ApplyEffectStatic(target);
+            if (hasStatModifier)
+            {
+                statModifiers.Add(data.ApplyModStatic(target));
+            }
+            else
+            {
+                data.ApplyEffectStatic(target);
+            }
         }
         for (int i = 0; i < duration; i++)
         {
             yield return new WaitForSeconds(1f);
-            if (eot)
+            if (eot && !isDummy)
             {
-                ApplyEffectEOT(target);
+                if (hasStatModifier)
+                {
+                    statModifiers.Add(data.ApplyModEOT(target));
+                }
+                else
+                {
+                    data.ApplyEffectEOT(target);
+                }
             }
         }
-        RemoveEffects(target);
+        if (statModifiers.Count > 0 && !isDummy)
+        {
+            data.RemoveEffects(target, statModifiers);
+        }
         elapsed = true;
-    }
-
-    public virtual void ApplyEffectStatic(CharacterObject target)
-    {
-
-    }
-
-    public virtual void ApplyEffectEOT(CharacterObject target)
-    {
-
-    }
-
-    public virtual void RemoveEffects(CharacterObject target)
-    {
-
     }
 }

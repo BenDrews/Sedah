@@ -4,7 +4,7 @@ using UnityEngine;
 using Mirror;
 
 [CreateAssetMenu(fileName = "DamageStatus", menuName = "ScriptableObjects/Statuses/DamageStatus")]
-public class DamageStatus : Status
+public class DamageStatus : StatusData
 {
     public DamageType dmg;
     public override void ApplyEffectEOT(CharacterObject target)

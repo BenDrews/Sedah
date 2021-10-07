@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <LangVersion>latest</LangVersion>
+    <LangVersion>8.0</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -53,6 +53,9 @@
     <UnityVersion>2020.3.18f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Assets\Scripts\Abilities\TargetProjectile.cs" />
     <Compile Include="Assets\Scripts\Abilities\PillarOfFire.cs" />
     <Compile Include="Assets\Scripts\EntityStates\IdlingState.cs" />
@@ -82,10 +85,12 @@
     <Compile Include="Assets\Scripts\NetworkManagerGame.cs" />
     <Compile Include="Assets\Scripts\Mob\MobMovement.cs" />
     <Compile Include="Assets\Scripts\PlayerCamera.cs" />
+    <Compile Include="Assets\Scripts\UI\HealthDisplayHUD.cs" />
     <Compile Include="Assets\Scripts\Abilities\Aoes\Aoe.cs" />
     <Compile Include="Assets\Scripts\Abilities\Aoes\DelayedCircleAoe.cs" />
     <Compile Include="Assets\Scripts\Abilities\AbilityEffects\AbilityEffectData.cs" />
     <Compile Include="Assets\Scripts\EntityStates\EntityStateNames.cs" />
+    <Compile Include="Assets\Scripts\UI\StatUI.cs" />
     <Compile Include="Assets\Scripts\EntityStates\AutoAttacking.cs" />
     <Compile Include="Assets\Scripts\Character\Commands\PlayerAutoAttack.cs" />
     <Compile Include="Assets\Scripts\Abilities\AbilityDatabase.cs" />
@@ -100,31 +105,32 @@
     <Compile Include="Assets\Scripts\Mob\ServerMovement.cs" />
     <Compile Include="Assets\Scripts\Mob\ServerAutoAttack.cs" />
     <Compile Include="Assets\Scripts\Abilities\Projectiles\CharacterTargetedProjectile.cs" />
-    <Compile Include="Assets\Scripts\Items\Item.cs" />
     <Compile Include="Assets\Scripts\Statuses\Status.cs" />
+    <Compile Include="Assets\Scripts\Items\Item.cs" />
+    <Compile Include="Assets\Scripts\Statuses\StatusData.cs" />
     <Compile Include="Assets\Scripts\Abilities\AbilityEffects\StatusEffectData.cs" />
     <Compile Include="Assets\Scripts\Character\Commands\Movement.cs" />
     <Compile Include="Assets\Scripts\Character\Stat.cs" />
     <Compile Include="Assets\Scripts\Mob\MobAbilityCast.cs" />
+    <Compile Include="Assets\Scripts\UI\StatusUI.cs" />
     <Compile Include="Assets\Scripts\Abilities\AbilityEffects\StatusEffect.cs" />
     <Compile Include="Assets\Scripts\Items\ItemDatabase.cs" />
     <Compile Include="Assets\Scripts\Character\Commands\PlayerAbility.cs" />
     <Compile Include="Assets\Scripts\Character\Health.cs" />
     <Compile Include="Assets\Scripts\Abilities\Projectiles\ProjectileData.cs" />
-    <Compile Include="Assets\Scripts\Abilities\AbilityTemplate.cs" />
+    <Compile Include="Assets\Scripts\Abilities\Ability.cs" />
     <Compile Include="Assets\Scripts\Abilities\Projectiles\Projectile.cs" />
     <Compile Include="Assets\Scripts\LevelManagement\LevelManager.cs" />
-    <Compile Include="Assets\Scripts\Abilities\Ability.cs" />
+    <Compile Include="Assets\Scripts\UI\AbilityUI.cs" />
+    <Compile Include="Assets\Scripts\Abilities\AbilityData.cs" />
     <Compile Include="Assets\Scripts\NetworkingLobby\UILobby.cs" />
     <Compile Include="Assets\Scripts\Character\Commands\PlayerMovement.cs" />
     <Compile Include="Assets\Scripts\NetworkingLobby\Player.cs" />
     <Compile Include="Assets\Scripts\EntityStates\EntityState.cs" />
     <Compile Include="Assets\Scripts\NetworkingLobby\AutoHostClient.cs" />
     <Compile Include="Assets\Scripts\Statuses\BuffStatus.cs" />
+    <Compile Include="Assets\Scripts\Statuses\StatusDatabase.cs" />
     <Compile Include="Assets\Scripts\LevelManagement\Dungeon.cs" />
-    <Compile Include="Assets\Scripts\UI\HealthDisplayHUD.cs" />
-    <Compile Include="Assets\Scripts\UI\StatUI.cs" />
-    <Compile Include="Assets\Scripts\UI\AbilityUI.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Mirror\Plugins\Mono.Cecil\Mono.CecilX.dll" />

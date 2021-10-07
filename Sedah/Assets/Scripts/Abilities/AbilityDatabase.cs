@@ -5,27 +5,20 @@ using Mirror;
 
 [CreateAssetMenu(fileName = "New Ability Database", menuName = "ScriptableObjects/AbilityDatabase")]
 
-public class AbilityDatabase : ScriptableObject, ISerializationCallbackReceiver
+public class AbilityDatabase : ScriptableObject
 {
-    public Ability[] Abilities;
-    public Dictionary<int, Ability> getAbility = new Dictionary<int, Ability>();
+    public AbilityData[] AbilityData;
 
-    public void OnAfterDeserialize()
+    public void OnValidate()
     {
-        getAbility = new Dictionary<int, Ability>();
-        for (int i = 0; i < Abilities.Length; i++)
+        for (int i = 0; i < AbilityData.Length; i++)
         {
-            getAbility.Add(i, Abilities[i]);
+            AbilityData[i].id = i;
         }
     }
 
-    public Ability GetAbility(int id)
+    public AbilityData GetAbility(int id)
     {
-        return getAbility[id];
-    }
-
-    public void OnBeforeSerialize()
-    {
-        getAbility = new Dictionary<int, Ability>();
+        return AbilityData[id];
     }
 }

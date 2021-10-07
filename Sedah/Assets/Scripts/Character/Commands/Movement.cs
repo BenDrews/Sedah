@@ -34,6 +34,7 @@ namespace Sedah
             agent.SetDestination(destination);
             agent.isStopped = false;
             animator.SetBool("Moving", true);
+            RpcSetMoveState();
         }
 
         [Command]
@@ -44,6 +45,21 @@ namespace Sedah
             agent.SetDestination(destination);
             agent.isStopped = false;
             animator.SetBool("Moving", true);
+            RpcSetMoveState();
+        }
+
+        [ClientRpc]
+        public void RpcSetMoveState()
+        {
+            stateMachine.SetNextState(new MovingState(stateMachine));
+            animator.SetBool("Moving", true);
+        }
+
+        [ClientRpc]
+        public void RpcSetIdlingState()
+        {
+            stateMachine.SetNextState(new IdlingState(stateMachine));
+            animator.SetBool("Moving", false);
         }
 
         public void Update()
@@ -58,6 +74,7 @@ namespace Sedah
                         agent.isStopped = true;
                         stateMachine.SetNextState(new IdlingState(stateMachine));
                         animator.SetBool("Moving", false);
+                        RpcSetIdlingState();
                     }
                     agent.speed = movementSpeed;
                     Vector3 dir = destination - transform.position;

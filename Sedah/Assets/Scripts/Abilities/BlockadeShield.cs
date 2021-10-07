@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 
-public class BlockadeShield : Ability
+public class BlockadeShield : AbilityData
 {
     //IGNORE, WIP
     public GameObject shield; 

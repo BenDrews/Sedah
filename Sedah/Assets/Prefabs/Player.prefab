@@ -154,7 +154,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1960080401273295257}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7f5a93ec3777ffb4d8e4d44c927e1e6a, type: 3}
   m_Name: 
@@ -162,7 +162,10 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   abilityDatabase: {fileID: 11400000, guid: bd90ddd6416ca354792eaea05b0ceb41, type: 2}
+  statusDatabase: {fileID: 11400000, guid: dff4ab936bf80f347ae45e807554b6b2, type: 2}
+  statuss: {fileID: 11400000, guid: 77453951b0ba5bf4ba7f20cdbfcc3072, type: 2}
   character: {fileID: 11400000, guid: e5758064760e01e4c9e62ea12b103192, type: 2}
+  gay: Gay
   abilityTemplate: {fileID: 8856369956228063789, guid: 51c58660d471b024b917b80e24340df7, type: 3}
   team: 0
 --- !u!114 &2524789960037904295
@@ -367,7 +370,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  canvas: {fileID: 0}
+  menu: {fileID: 0}
 --- !u!1 &8988265219873394944
 GameObject:
   m_ObjectHideFlags: 0

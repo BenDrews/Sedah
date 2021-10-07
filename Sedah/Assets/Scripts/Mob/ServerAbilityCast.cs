@@ -45,7 +45,7 @@ public abstract class ServerAbilityCast : NetworkBehaviour
 
         if (stateMachine.GetState().type == EntityStateType.AbilityCast)
         {
-            AbilityTemplate ability = character.GetAbility(index);
+            Ability ability = character.GetAbility(index);
             // Check if target is in range
             float dist = Vector3.Distance(transform.position, target.transform.position);
             if (dist <= ability.GetRange() && !ability.OnCooldown())
@@ -68,7 +68,7 @@ public abstract class ServerAbilityCast : NetworkBehaviour
 
         if (stateMachine.GetState().type == EntityStateType.AbilityCast)
         {
-            AbilityTemplate ability = character.GetAbility(index);
+            Ability ability = character.GetAbility(index);
             // Check if target is in range
             float dist = Vector3.Distance(transform.position, target.transform.position);
             if (dist <= ability.GetRange() && !ability.OnCooldown())
@@ -85,7 +85,7 @@ public abstract class ServerAbilityCast : NetworkBehaviour
         }
     }
 
-    public IEnumerator RunCooldown(AbilityTemplate ability, float cd)
+    public IEnumerator RunCooldown(Ability ability, float cd)
     {
         ability.SetCooldown(true);
         yield return new WaitForSeconds(cd);
@@ -95,7 +95,7 @@ public abstract class ServerAbilityCast : NetworkBehaviour
     // Ability affects target.
     protected void FireAbilityCast(CharacterObject target)
     {
-        AbilityTemplate ability = character.GetAbility(index);
+        Ability ability = character.GetAbility(index);
         ability.Activate(character, target);
         runCd = StartCoroutine(RunCooldown(ability, ability.GetCooldown() * (1 - character.GetStatValue(StatType.CDR) / 100)));
     }
@@ -103,7 +103,7 @@ public abstract class ServerAbilityCast : NetworkBehaviour
     // Ability affects area/point.
     protected void FireAbilityCast(Vector3 point)
     {
-        AbilityTemplate ability = character.GetAbility(index);
+        Ability ability = character.GetAbility(index);
         ability.Activate(character, point);
         runCd = StartCoroutine(RunCooldown(ability, ability.GetCooldown() * (1 - character.GetStatValue(StatType.CDR) / 100)));
     }

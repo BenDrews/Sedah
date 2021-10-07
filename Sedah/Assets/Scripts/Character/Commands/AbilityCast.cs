@@ -29,6 +29,7 @@ public abstract class AbilityCast : NetworkBehaviour
         this.index = index;
         isTarget = true;
         animator.SetBool("Casting", true);
+        RpcSetAbilityCastState();
     }
 
     [Command]
@@ -40,6 +41,23 @@ public abstract class AbilityCast : NetworkBehaviour
         this.index = index;
         isTarget = false;
         animator.SetBool("Casting", true);
+        RpcSetAbilityCastState();
+    }
+
+    [ClientRpc]
+    protected void RpcSetAbilityCastState()
+    {
+        EntityStateMachine stateMachine = GetComponent<EntityStateMachine>();
+        stateMachine.SetNextState(new CastingState(stateMachine));
+        animator.SetBool("Casting", true);
+    }
+
+    [ClientRpc]
+    protected void RpcSetIdlingState()
+    {
+        EntityStateMachine stateMachine = GetComponent<EntityStateMachine>();
+        stateMachine.SetNextState(new IdlingState(stateMachine));
+        animator.SetBool("Casting", false);
     }
 
     protected void AttemptAbilityCast(CharacterObject target)
@@ -48,7 +66,7 @@ public abstract class AbilityCast : NetworkBehaviour
 
         if (stateMachine.GetState().type == EntityStateType.AbilityCast)
         {
-            AbilityTemplate ability = character.GetAbility(index);
+            Ability ability = character.GetAbility(index);
             // Check if target is in range
             float dist = Vector3.Distance(transform.position, target.transform.position);
             if (dist <= ability.GetRange() && !ability.OnCooldown())
@@ -72,7 +90,7 @@ public abstract class AbilityCast : NetworkBehaviour
 
         if (stateMachine.GetState().type == EntityStateType.AbilityCast)
         {
-            AbilityTemplate ability = character.GetAbility(index);
+            Ability ability = character.GetAbility(index);
             // Check if target is in range
             float dist = Vector3.Distance(transform.position, point);
             if (dist <= ability.GetRange() && !ability.OnCooldown())
@@ -83,14 +101,16 @@ public abstract class AbilityCast : NetworkBehaviour
             }
             else
             {
+                stateMachine.SetNextState(new IdlingState(stateMachine));
                 animator.SetBool("Casting", false);
+                RpcSetIdlingState();
                 //TODO" Get the player to move in range of ability cast
                 //this.GetComponent<MobMovement>()?.Move(target.transform.position);
             }
         }
     }
 
-    public IEnumerator RunCooldown(AbilityTemplate ability, float cd)
+    public IEnumerator RunCooldown(Ability ability, float cd)
     {
         ability.SetCooldown(true);
         yield return new WaitForSeconds(cd);
@@ -100,7 +120,7 @@ public abstract class AbilityCast : NetworkBehaviour
     // Ability affects target.
     protected void FireAbilityCast(CharacterObject target)
     {
-        AbilityTemplate ability = character.GetAbility(index);
+        Ability ability = character.GetAbility(index);
         ability.Activate(character, target);
         runCd = StartCoroutine(RunCooldown(ability, ability.GetCooldown() * (1 - character.GetStatValue(StatType.CDR)/100)));
     }
@@ -108,7 +128,7 @@ public abstract class AbilityCast : NetworkBehaviour
     // Ability affects area/point.
     protected void FireAbilityCast(Vector3 point)
     {
-        AbilityTemplate ability = character.GetAbility(index);
+        Ability ability = character.GetAbility(index);
         ability.Activate(character, point);
         runCd = StartCoroutine(RunCooldown(ability, ability.GetCooldown() * (1 - character.GetStatValue(StatType.CDR)/100)));
     }
